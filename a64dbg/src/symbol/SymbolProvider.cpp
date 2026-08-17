@@ -146,11 +146,14 @@ bool SymbolProvider::parseImage(const ImageInfo& img, ParsedImage& out) {
     return true;  // không có symbol table (vd một số dylib stripped)
   }
 
-  const std::uint64_t symAddr = fileOffToMem(segs, symtab->symoff);
-  const std::uint64_t strAddr = fileOffToMem(segs, symtab->stroff);
-  if (symAddr == UINT64_MAX || strAddr == UINT64_MAX) {
+  // fileOffToMem trả vmaddr CHƯA trượt ASLR → phải cộng slide để có địa chỉ runtime.
+  const std::uint64_t symVm = fileOffToMem(segs, symtab->symoff);
+  const std::uint64_t strVm = fileOffToMem(segs, symtab->stroff);
+  if (symVm == UINT64_MAX || strVm == UINT64_MAX) {
     return false;
   }
+  const std::uint64_t symAddr = out.slide + symVm;
+  const std::uint64_t strAddr = out.slide + strVm;
 
   std::vector<nlist_64> nlist(symtab->nsyms);
   if (!m_reader(symAddr, nlist.data(), nlist.size() * sizeof(nlist_64))) {
@@ -191,11 +194,6 @@ bool SymbolProvider::resolve(std::uint64_t addr, ResolvedSymbol& out) {
       it = m_cache.emplace(img.base, std::move(parsed)).first;
     }
     const ParsedImage& p = it->second;
-    std::fprintf(stderr, "[sym] %s base=0x%llx vmsize=0x%llx slide=0x%llx syms=%zu (addr=0x%llx in=%d)\n",
-                 p.name.c_str(), static_cast<unsigned long long>(p.base),
-                 static_cast<unsigned long long>(p.vmsize), static_cast<unsigned long long>(p.slide),
-                 p.symbols.size(), static_cast<unsigned long long>(addr),
-                 (addr >= p.base && addr < p.base + p.vmsize) ? 1 : 0);
     if (addr < p.base || addr >= p.base + p.vmsize) {
       continue;
     }

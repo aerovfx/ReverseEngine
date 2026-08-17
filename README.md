@@ -8,7 +8,7 @@
 
 <p>
   <a href="https://aerovfx.github.io/ReverseEngine/"><img src="https://img.shields.io/badge/🚀_Truy_cập_trang_học-aerovfx.github.io%2FReverseEngine-b455ff?style=for-the-badge&logo=github" alt="Truy cập trang học"></a>
-  <a href="#-lộ-trình"><img src="https://img.shields.io/badge/Lộ_trình-4_khóa·40_tuần-ffb000?style=for-the-badge" alt="Lộ trình"></a>
+  <a href="#-lộ-trình"><img src="https://img.shields.io/badge/Lộ_trình-5_khóa·50_tuần-ffb000?style=for-the-badge" alt="Lộ trình"></a>
   <a href="#-nguyên-tắc-an-toàn"><img src="https://img.shields.io/badge/Lab-An_toàn·Cô_lập-b455ff?style=for-the-badge" alt="An toàn"></a>
 </p>
 
@@ -47,6 +47,7 @@ ReverseEngine là bộ giáo trình **reverse engineering 10 tuần** bằng ti�
 | 02 | [Software Reverse Engineering](https://aerovfx.github.io/ReverseEngine/software-reverse-engineering-10weeks/INDEX.html) | 🔴 Chuyên sâu | x64dbg, DIE, secure patching, license |
 | 03 | [Software Cracking & Ethical Hacking](https://aerovfx.github.io/ReverseEngine/software-cracking-10weeks/INDEX.html) | 🔴 Chuyên sâu | DIE → EP → breakpoint → reversing jump → patch |
 | 04 | [macOS Reverse Engineering](https://aerovfx.github.io/ReverseEngine/macos-reverse-engineering-10weeks/INDEX.html) | 🔴 Chuyên sâu | Mach-O, ARM64, Objective-C/Swift, Frida |
+| 05 | [Agent Sandbox Security](https://aerovfx.github.io/ReverseEngine/agent-sandbox-10weeks/INDEX.html) | 🔴 Chuyên sâu | KVM microVM, CoW, eBPF, egress zero-trust |
 
 > Mỗi khóa gồm **10 tuần**, có `INDEX.html` (tổng quan), `schedule.md` (lịch học), `lessons/` (bài học), `code/` (code mẫu), `exercises/` (bài tập) và `projects/` (dự án cuối khóa).
 

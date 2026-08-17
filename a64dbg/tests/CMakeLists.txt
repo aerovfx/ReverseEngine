@@ -78,3 +78,54 @@ add_custom_command(TARGET test_symbol POST_BUILD
   VERBATIM)
 add_test(NAME symbol COMMAND test_symbol)
 set_tests_properties(symbol PROPERTIES TIMEOUT 20)
+
+add_executable(test_phase4 test_phase4.cpp)
+target_link_libraries(test_phase4 PRIVATE Qt6::Core a64dbg_ui)
+target_compile_definitions(test_phase4 PRIVATE
+  TARGET_PATH="$<TARGET_FILE:a64dbg_target>")
+a64dbg_enable_warnings(test_phase4)
+add_custom_command(TARGET test_phase4 POST_BUILD
+  COMMAND codesign --force --sign - --entitlements
+          "${CMAKE_SOURCE_DIR}/entitlements/debugger.entitlements"
+          "$<TARGET_FILE:test_phase4>"
+  COMMENT "sign test_phase4 với debugger entitlement"
+  VERBATIM)
+add_test(NAME phase4 COMMAND test_phase4)
+set_tests_properties(phase4 PROPERTIES TIMEOUT 20)
+
+add_executable(test_phase5 test_phase5.cpp)
+target_link_libraries(test_phase5 PRIVATE Qt6::Core a64dbg_ui)
+target_compile_definitions(test_phase5 PRIVATE
+  TARGET_PATH="$<TARGET_FILE:a64dbg_target>")
+a64dbg_enable_warnings(test_phase5)
+add_custom_command(TARGET test_phase5 POST_BUILD
+  COMMAND codesign --force --sign - --entitlements
+          "${CMAKE_SOURCE_DIR}/entitlements/debugger.entitlements"
+          "$<TARGET_FILE:test_phase5>"
+  COMMENT "sign test_phase5 với debugger entitlement"
+  VERBATIM)
+add_test(NAME phase5 COMMAND test_phase5)
+set_tests_properties(phase5 PROPERTIES TIMEOUT 20)
+
+add_executable(test_plugin test_plugin.cpp)
+target_link_libraries(test_plugin PRIVATE a64dbg_plugin)
+target_compile_definitions(test_plugin PRIVATE
+  PLUGIN_PATH="$<TARGET_FILE:example_plugin>")
+a64dbg_enable_warnings(test_plugin)
+add_test(NAME plugin COMMAND test_plugin)
+set_tests_properties(plugin PROPERTIES TIMEOUT 20)
+
+add_executable(test_plugin_integration test_plugin_integration.cpp)
+target_link_libraries(test_plugin_integration PRIVATE Qt6::Core a64dbg_ui)
+target_compile_definitions(test_plugin_integration PRIVATE
+  TARGET_PATH="$<TARGET_FILE:a64dbg_target>"
+  PLUGIN_PATH="$<TARGET_FILE:example_plugin>")
+a64dbg_enable_warnings(test_plugin_integration)
+add_custom_command(TARGET test_plugin_integration POST_BUILD
+  COMMAND codesign --force --sign - --entitlements
+          "${CMAKE_SOURCE_DIR}/entitlements/debugger.entitlements"
+          "$<TARGET_FILE:test_plugin_integration>"
+  COMMENT "sign test_plugin_integration với debugger entitlement"
+  VERBATIM)
+add_test(NAME plugin_integration COMMAND test_plugin_integration)
+set_tests_properties(plugin_integration PROPERTIES TIMEOUT 20)

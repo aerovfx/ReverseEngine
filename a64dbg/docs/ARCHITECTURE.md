@@ -35,10 +35,11 @@
 | `src/model` | `a64dbg_model` | Session, BreakpointManager (sau) | Phase 0 stub |
 | `src/disasm` | `a64dbg_disasm` | Capstone wrapper (ARM64) + instruction cache | Phase 2 ✓ (disasm ARM64) |
 | `src/macho` | `a64dbg_macho` | Mach-O parser (segment/symbol/entry) | Phase 2 ✓ |
+| `src/symbol` | `a64dbg_symbol` | SymbolProvider (TASK_DYLD_INFO + LC_SYMTAB) | Phase 4 ✓ |
 | `src/core` | `a64dbg_core` | IDebugBackend + MachBackend | Phase 3 ✓ (attach/mem/reg/BRK bp/hw bp/watchpoint/SS/dance) |
-| `src/lldb` | `a64dbg_lldb` | LLDBBackend + ISymbolProvider | Phase 4 |
+| `src/lldb` | `a64dbg_lldb` | LLDBBackend + ISymbolProvider | defer (SB API headers không có trong Xcode) |
 | `src/app` | `a64dbg` | main + MainWindow + theme | Phase 2 ✓ (wire controller) |
-| `src/ui` | `a64dbg_ui` | DebuggerController + DisasmView/DumpView | Phase 2 ✓ |
+| `src/ui` | `a64dbg_ui` | DebuggerController + DisasmView/DumpView | Phase 5 ✓ (step over/out + stack walk/search/patch) |
 | `src/plugin` | `a64dbg_plugin` | PluginHost + scripting | Phase 6 |
 
 ## Cấu trúc cây
@@ -59,7 +60,7 @@ a64dbg/
 
 - **Capstone** (5.0.9, ghim qua FetchContent, build diet ARM64+X86): Phase 0 đã nối pipeline (xem `src/disasm/Disassembler.cpp`).
 - **Keystone**: Phase 5 (assemble/patch). Kéo khi tới.
-- **LLDB SB API**: defer Phase 4 — Xcode cung cấp `lldb` binary và `LLDB.framework` nhưng KHÔNG lộ SB API headers (`lldb/API/*.h`) trong SDK; cần lấy headers từ llvm-project (khớp phiên bản) hoặc build lldb, sẽ khảo sát ở Phase 4.
+- **LLDB SB API**: đã xác nhận Phase 4 — Xcode `LLDB.framework` chỉ có binary driver 188 MB + plugin, KHÔNG có SB API headers (`SBProcess.h` không tồn tại trong Xcode). → thay bằng **symbolication native** (`src/symbol`: `TASK_DYLD_INFO` + parse `LC_SYMTAB`) và step over/out bằng disasm + temp bp. Dùng LLDB SB API chỉ khi vendor llvm-project headers + build lldb (bỏ qua ở bản này).
 - **Lua** (scripting): Phase 6.
 
 ## Ràng buộc nền tảng
@@ -80,3 +81,4 @@ a64dbg/
 - **Hardware breakpoint (bvr)**: gửi `EXC_BREAKPOINT code[0]=1` (giống BRK), `code[1]=địa chỉ` — phân biệt bằng tra bảng `m_hwBps`.
 - **Watchpoint (wvr)**: gửi `EXC_BREAKPOINT code[0]=EXC_ARM_DA_DEBUG(0x102)`, `code[1]=địa chỉ được watch` (KHÔNG phải EXC_BAD_ACCESS).
 - **Breakpoint dance** (continue giữ bp): khôi phục lệnh gốc → single-step 1 lệnh → re-patch BRK → continue; single-step trung gian phải "transparent" (không dừng cho user).
+- **Detach phải khôi phục breakpoint trước**: nếu detach khi đang dừng ở BRK mà không restore lệnh gốc, reply sẽ resume target NGAY TẠI lệnh BRK → re-trigger → kẹt trong exception (SIGKILL không kết liễu kịp). Fix: detach() restore mọi software bp + tắt hw bp/watchpoint trước khi resume.

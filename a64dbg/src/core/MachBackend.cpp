@@ -14,6 +14,7 @@
 #include <unistd.h>
 
 #include <chrono>
+#include <cstdio>
 #include <cstring>
 
 extern char** environ;
@@ -138,6 +139,30 @@ bool MachBackend::detach() {
   if (m_task == MACH_PORT_NULL) {
     return true;
   }
+
+  // Nếu đang dừng (target đã suspend), khôi phục mọi software breakpoint + tắt
+  // hw bp/watchpoint TRƯỚC khi resume, để target không re-trigger sau khi reply.
+  if (m_stopped.load()) {
+    for (const auto& [addr, orig] : m_swBps) {
+      writeCode(addr, &orig, sizeof(orig));
+    }
+    m_swBps.clear();
+    if (m_primaryThread != MACH_PORT_NULL) {
+      arm_debug_state64_t ds{};
+      mach_msg_type_number_t count = ARM_DEBUG_STATE64_COUNT;
+      if (thread_get_state(m_primaryThread, ARM_DEBUG_STATE64,
+                           reinterpret_cast<thread_state_t>(&ds), &count) == KERN_SUCCESS) {
+        for (int i = 0; i < 16; ++i) {
+          ds.__bcr[i] = 0;
+          ds.__wcr[i] = 0;
+        }
+        thread_set_state(m_primaryThread, ARM_DEBUG_STATE64,
+                         reinterpret_cast<thread_state_t>(&ds), count);
+      }
+    }
+    m_hwBps.clear();
+  }
+
   m_stop = true;
   {
     std::lock_guard<std::mutex> lk(m_mtx);
