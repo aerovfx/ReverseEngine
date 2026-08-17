@@ -1,0 +1,37 @@
+name: a64dbg-macos
+
+on:
+  push:
+    paths:
+      - 'a64dbg/**'
+      - '.github/workflows/a64dbg-macos.yml'
+  pull_request:
+    paths:
+      - 'a64dbg/**'
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: macos-14   # Apple Silicon (arm64) runner
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install Qt
+        run: brew install qt
+
+      - name: Configure (debug)
+        working-directory: a64dbg
+        run: cmake --preset mac-arm64-debug
+
+      - name: Build
+        working-directory: a64dbg
+        run: cmake --build --preset mac-arm64-debug
+
+      - name: Test (capstone smoke)
+        working-directory: a64dbg
+        run: ctest --preset mac-arm64-debug
+
+      - name: Sign (adhoc + debugger entitlement)
+        working-directory: a64dbg
+        run: cmake --build --preset mac-arm64-debug --target sign-a64dbg

@@ -1,0 +1,43 @@
+{
+  "version": 6,
+  "cmakeMinimumRequired": { "major": 3, "minor": 24, "patch": 0 },
+  "configurePresets": [
+    {
+      "name": "mac-arm64-debug",
+      "displayName": "macOS arm64 Debug",
+      "generator": "Ninja",
+      "binaryDir": "${sourceDir}/build/mac-arm64-debug",
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "Debug",
+        "CMAKE_OSX_ARCHITECTURES": "arm64",
+        "CMAKE_OSX_DEPLOYMENT_TARGET": "14.0",
+        "CMAKE_PREFIX_PATH": "/opt/homebrew/opt/qt",
+        "A64DBG_BUILD_TESTS": "ON"
+      }
+    },
+    {
+      "name": "mac-arm64-release",
+      "displayName": "macOS arm64 Release",
+      "generator": "Ninja",
+      "binaryDir": "${sourceDir}/build/mac-arm64-release",
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "Release",
+        "CMAKE_OSX_ARCHITECTURES": "arm64",
+        "CMAKE_OSX_DEPLOYMENT_TARGET": "14.0",
+        "CMAKE_PREFIX_PATH": "/opt/homebrew/opt/qt",
+        "A64DBG_BUILD_TESTS": "OFF"
+      }
+    }
+  ],
+  "buildPresets": [
+    { "name": "mac-arm64-debug", "configurePreset": "mac-arm64-debug" },
+    { "name": "mac-arm64-release", "configurePreset": "mac-arm64-release" }
+  ],
+  "testPresets": [
+    {
+      "name": "mac-arm64-debug",
+      "configurePreset": "mac-arm64-debug",
+      "output": { "outputOnFailure": true }
+    }
+  ]
+}

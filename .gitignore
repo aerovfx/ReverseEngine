@@ -1,0 +1,11 @@
+# Binary không liên quan tới trang
+/main
+
+# Output build Jekyll
+/_site/
+
+# Hệ thống macOS
+.DS_Store
+
+# a64dbg — cây build CMake (FetchContent tải về cũng nằm trong build/)
+/a64dbg/build*/

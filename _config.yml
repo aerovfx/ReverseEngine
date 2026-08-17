@@ -1,0 +1,21 @@
+title: ReverseEngine
+description: Lộ trình học reverse engineering thực chiến bằng tiếng Việt
+url: https://aerovfx.github.io
+baseurl: /ReverseEngine
+markdown: kramdown
+plugins:
+  - jekyll-relative-links
+relative_links:
+  enabled: true
+  collections: true
+kramdown:
+  input: GFM
+  syntax_highlighter: rouge
+  hard_wrap: false
+encoding: utf-8
+exclude:
+  - .git
+  - .github
+  - plans
+  - main
+

@@ -1,0 +1,176 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="ReverseEngine — lộ trình học reverse engineering thực chiến bằng tiếng Việt.">
+  <meta name="theme-color" content="#07110f">
+  <title>ReverseEngine — Học reverse engineering có lộ trình</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="classroom.css">
+</head>
+<body>
+  <a class="skip-link" href="#courses">Bỏ qua tới nội dung</a>
+  <header class="site-header">
+    <a class="brand" href="#top" aria-label="ReverseEngine, trang chủ">
+      <span class="brand-mark" aria-hidden="true">R</span>
+      <span>REVERSE<span>ENGINE</span></span>
+    </a>
+    <nav aria-label="Điều hướng chính">
+      <a href="#courses">Lộ trình</a>
+      <a href="#classroom">Lớp học</a>
+      <a href="#method">Phương pháp</a>
+      <a href="#safety">An toàn</a>
+    </nav>
+    <a class="header-cta" href="#courses">Bắt đầu học <span aria-hidden="true">↗</span></a>
+  </header>
+
+  <main id="top">
+    <section class="hero" aria-labelledby="hero-title">
+      <div class="hero-grid" aria-hidden="true"></div>
+      <div class="hero-copy">
+        <p class="eyebrow"><span></span> Nền tảng học dịch ngược mở · Tiếng Việt</p>
+        <h1 id="hero-title">Đọc mã máy.<br><em>Làm chủ dịch ngược.</em></h1>
+        <p class="hero-lede">Lộ trình thực chiến từ nền tảng binary đến chuyên sâu reverse engineering. Học qua lab có kiểm soát, phân tích Mach-O/PE, hooking và xây dựng tư duy đọc mã đúng chuẩn.</p>
+        <div class="hero-actions">
+          <a class="button button-primary" href="#courses">Khám phá lộ trình <span aria-hidden="true">→</span></a>
+          <a class="button button-ghost" href="https://github.com/aerovfx/ReverseEngine" target="_blank" rel="noreferrer">Xem mã nguồn <span aria-hidden="true">↗</span></a>
+        </div>
+        <div class="trust-row" aria-label="Thông tin khóa học">
+          <div><strong>04</strong><span>lộ trình</span></div>
+          <div><strong>40</strong><span>tuần học</span></div>
+          <div><strong>60+</strong><span>bài thực hành</span></div>
+        </div>
+      </div>
+      <div class="hero-visual" aria-label="Minh họa terminal reverse engineering">
+        <div class="radar">
+          <span class="orbit orbit-a"></span><span class="orbit orbit-b"></span>
+          <span class="radar-dot dot-a"></span><span class="radar-dot dot-b"></span><span class="radar-dot dot-c"></span>
+          <div class="shield" aria-hidden="true">
+            <svg viewBox="0 0 64 72" fill="none"><path d="M32 3 57 13v19c0 17-10.7 29.6-25 36C17.7 61.6 7 49 7 32V13L32 3Z" stroke="currentColor" stroke-width="2"/><path d="m21 35 7 7 15-17" stroke="currentColor" stroke-width="3"/></svg>
+          </div>
+        </div>
+        <div class="terminal-card">
+          <div class="terminal-top"><i></i><i></i><i></i><span>re_session.sh</span></div>
+          <code><span class="muted">$</span> ./start_re<br><span class="green">✓</span> lab_environment: isolated<br><span class="green">✓</span> binary: loaded<br><span class="muted">→</span> next_module: <b>mach-o</b><br><span class="cursor">▋</span></code>
+        </div>
+      </div>
+    </section>
+
+    <section class="marquee" aria-label="Chủ đề nổi bật">
+      <div>MACH-O <b>✦</b> PE BINARY <b>✦</b> x64dbg <b>✦</b> LLDB <b>✦</b> FRIDA <b>✦</b> GHIDRA <b>✦</b> MALWARE ANALYSIS <b>✦</b> SECURE PATCHING</div>
+    </section>
+
+    <section class="courses section" id="courses" aria-labelledby="courses-title">
+      <div class="section-heading">
+        <div><p class="eyebrow"><span></span> Chọn hướng đi</p><h2 id="courses-title">Lộ trình dành cho bạn</h2></div>
+        <p>Mỗi lộ trình gồm 10 tuần, kết hợp lý thuyết cô đọng, lab có hướng dẫn và dự án cuối khóa.</p>
+      </div>
+      <div class="course-tools">
+        <label class="search"><span aria-hidden="true">⌕</span><span class="sr-only">Tìm khóa học</span><input id="course-search" type="search" placeholder="Tìm theo tên hoặc kỹ năng…"></label>
+        <div class="filters" role="group" aria-label="Lọc khóa học">
+          <button class="active" data-filter="all">Tất cả</button>
+          <button data-filter="foundation">Nền tảng</button>
+          <button data-filter="advanced">Chuyên sâu</button>
+        </div>
+      </div>
+      <div class="course-grid" id="course-grid">
+        <article class="course-card featured" data-level="foundation" data-search="reverse engineering malware mã độc pe windows phân tích tĩnh động unpacking ioc">
+          <div class="card-top"><span class="course-index">01</span><span class="badge">Nên bắt đầu</span></div>
+          <div class="course-icon">⌁</div><p class="course-meta">Nền tảng · 10 tuần</p>
+          <h3>Reverse Engineering &amp; Malware Analysis</h3><p>Nhận dạng file, định dạng PE, phân tích tĩnh/động, unpacking và trích xuất IOC trên mẫu trong lab cô lập.</p>
+          <div class="tags"><span>PE</span><span>Malware</span><span>Unpacking</span></div>
+          <div class="learning-links" aria-label="Nội dung khóa Reverse Engineering & Malware Analysis">
+            <a href="reverse-engineering-malware-10weeks/lessons/week01.html"><b>01</b><span>Lesson</span></a>
+            <a href="reverse-engineering-malware-10weeks/code/week01/README.html"><b>02</b><span>Code</span></a>
+            <a href="reverse-engineering-malware-10weeks/exercises/week01/README.html"><b>03</b><span>Exercise</span></a>
+            <a href="reverse-engineering-malware-10weeks/projects/final_project.html"><b>04</b><span>Project</span></a>
+          </div>
+          <a class="roadmap-link" href="reverse-engineering-malware-10weeks/INDEX.html">Xem toàn bộ lộ trình <span>→</span></a>
+        </article>
+        <article class="course-card" data-level="advanced" data-search="software reverse engineering dịch ngược binary x64dbg static dynamic patching">
+          <div class="card-top"><span class="course-index">02</span><span class="badge badge-dark">Lab offline</span></div>
+          <div class="course-icon">⌬</div><p class="course-meta">Chuyên sâu · 10 tuần</p>
+          <h3>Software Reverse Engineering</h3><p>Triage, phân tích tĩnh và động, đọc binary lab tự biên dịch và thực hành secure patching.</p>
+          <div class="tags"><span>Binary</span><span>x64dbg</span><span>Patching</span></div>
+          <div class="learning-links" aria-label="Nội dung khóa Software Reverse Engineering">
+            <a href="software-reverse-engineering-10weeks/lessons/week01.html"><b>01</b><span>Lesson</span></a>
+            <a href="software-reverse-engineering-10weeks/code/week01/README.html"><b>02</b><span>Code</span></a>
+            <a href="software-reverse-engineering-10weeks/exercises/week01/README.html"><b>03</b><span>Exercise</span></a>
+            <a href="software-reverse-engineering-10weeks/projects/final_project.html"><b>04</b><span>Project</span></a>
+          </div>
+          <a class="roadmap-link" href="software-reverse-engineering-10weeks/INDEX.html">Xem toàn bộ lộ trình <span>→</span></a>
+        </article>
+        <article class="course-card" data-level="advanced" data-search="software cracking ethical hacking x64dbg die breakpoint patch serial key">
+          <div class="card-top"><span class="course-index">03</span><span class="badge badge-dark">Lab x64dbg · DIE</span></div>
+          <div class="course-icon">⚒</div><p class="course-meta">Chuyên sâu · 10 tuần</p>
+          <h3>Software Cracking &amp; Ethical Hacking</h3><p>Quy trình cracking hợp pháp: DIE → entry point → breakpoint → reversing jump → patch, trên crackme và binary của bạn.</p>
+          <div class="tags"><span>x64dbg</span><span>DIE</span><span>Patch</span></div>
+          <div class="learning-links" aria-label="Nội dung khóa Software Cracking & Ethical Hacking">
+            <a href="software-cracking-10weeks/lessons/week01.html"><b>01</b><span>Lesson</span></a>
+            <a href="software-cracking-10weeks/code/week01/README.html"><b>02</b><span>Code</span></a>
+            <a href="software-cracking-10weeks/exercises/week01/README.html"><b>03</b><span>Exercise</span></a>
+            <a href="software-cracking-10weeks/projects/final_project.html"><b>04</b><span>Project</span></a>
+          </div>
+          <a class="roadmap-link" href="software-cracking-10weeks/INDEX.html">Xem toàn bộ lộ trình <span>→</span></a>
+        </article>
+        <article class="course-card" data-level="advanced" data-search="macos reverse engineering mach-o arm64 dyld objective-c swift lldb frida ghidra license">
+          <div class="card-top"><span class="course-index">04</span><span class="badge badge-dark">ARM64 · macOS</span></div>
+          <div class="course-icon">⌘</div><p class="course-meta">Chuyên sâu · 10 tuần</p>
+          <h3>macOS Reverse Engineering</h3><p>Phân tích ứng dụng macOS trên Apple Silicon: Mach-O, Objective-C/Swift runtime, hooking và cơ chế cấp phép trong phạm vi hợp pháp.</p>
+          <div class="tags"><span>Mach-O</span><span>ARM64</span><span>Frida</span></div>
+          <div class="learning-links" aria-label="Nội dung khóa macOS Reverse Engineering">
+            <a href="macos-reverse-engineering-10weeks/lessons/week01.html"><b>01</b><span>Lesson</span></a>
+            <a href="macos-reverse-engineering-10weeks/code/week01/README.html"><b>02</b><span>Code</span></a>
+            <a href="macos-reverse-engineering-10weeks/exercises/week01/README.html"><b>03</b><span>Exercise</span></a>
+            <a href="macos-reverse-engineering-10weeks/projects/final_project.html"><b>04</b><span>Project</span></a>
+          </div>
+          <a class="roadmap-link" href="macos-reverse-engineering-10weeks/INDEX.html">Xem toàn bộ lộ trình <span>→</span></a>
+        </article>
+      </div>
+      <p class="empty-state" id="empty-state" hidden>Không tìm thấy lộ trình phù hợp.</p>
+    </section>
+
+    <section class="classroom section" id="classroom" aria-labelledby="classroom-title">
+      <div class="section-heading">
+        <div><p class="eyebrow"><span></span> Classroom operations</p><h2 id="classroom-title">Học · Review · Tiến bộ</h2></div>
+        <p>Một quy trình khép kín cho học viên và giáo viên, chạy trực tiếp trên GitHub Pages và lưu cục bộ theo mặc định.</p>
+      </div>
+      <div class="classroom-grid">
+        <a class="classroom-card classroom-primary" href="tools/khao-sat/portal.html"><span class="classroom-no">01</span><i>◎</i><h3>Cổng lớp học</h3><p>Chọn khóa, buổi học và hồ sơ học viên trước khi bắt đầu đánh giá.</p><b>Vào classroom <span>→</span></b></a>
+        <a class="classroom-card" href="tools/khao-sat/index.html"><span class="classroom-no">02</span><i>▤</i><h3>Khảo sát học viên</h3><p>Thu phản hồi trải nghiệm, độ khó, kỹ năng đạt được và đề xuất cải thiện.</p><b>Mở khảo sát <span>→</span></b></a>
+        <a class="classroom-card" href="tools/khao-sat/danh-gia.html"><span class="classroom-no">03</span><i>◇</i><h3>Đánh giá đồng đẳng</h3><p>Học viên review lẫn nhau theo sáu tiêu chí bảo mật và năng lực cộng tác.</p><b>Bắt đầu review <span>→</span></b></a>
+        <a class="classroom-card" href="tools/khao-sat/admin.html"><span class="classroom-no">04</span><i>⚙</i><h3>Chấm điểm giáo viên</h3><p>Chấm rubric 1–5, ghi nhận xét, xem hồ sơ và xuất báo cáo CSV hoặc JSON.</p><b>Mở quản lý <span>→</span></b></a>
+        <a class="classroom-card classroom-wide" href="tools/khao-sat/ket-qua.html"><span class="classroom-no">05</span><i>▥</i><h3>Dashboard kết quả</h3><p>Tổng hợp khảo sát, đánh giá đồng đẳng và điểm giáo viên trong một màn hình.</p><b>Xem dashboard <span>→</span></b></a>
+      </div>
+      <div class="classroom-note"><span>LOCAL-FIRST</span><p>Dữ liệu mặc định không rời khỏi trình duyệt. Giáo viên có thể chủ động kết nối Google Sheets của mình tại trang <a href="tools/khao-sat/ket-noi.html">Kết nối dữ liệu →</a></p></div>
+    </section>
+
+    <section class="method section" id="method">
+      <div class="method-intro"><p class="eyebrow"><span></span> Học để làm được</p><h2>Một quy trình.<br>Tiến bộ mỗi tuần.</h2><p>Không chỉ đọc lý thuyết. Bạn sẽ quan sát, thực hành trong môi trường an toàn và ghi lại bằng chứng sau mỗi bài phân tích.</p></div>
+      <ol class="steps">
+        <li><span>01</span><div><h3>Hiểu định dạng &amp; runtime</h3><p>Nắm Mach-O/PE, kiến trúc x86/ARM64 và runtime Objective-C/Swift trước khi chạm vào công cụ.</p></div></li>
+        <li><span>02</span><div><h3>Phân tích có kiểm soát</h3><p>Lab offline, snapshot, read-only hoặc dry-run với mục tiêu và phạm vi rõ ràng.</p></div></li>
+        <li><span>03</span><div><h3>Tạo báo cáo &amp; công cụ thật</h3><p>Script phân tích, báo cáo IOC và capstone có thể đưa thẳng vào portfolio.</p></div></li>
+      </ol>
+    </section>
+
+    <section class="safety section" id="safety">
+      <div class="safety-mark" aria-hidden="true">✓</div>
+      <div><p class="eyebrow light">Nguyên tắc xuyên suốt</p><h2>Học dịch ngược.<br><em>Luôn có trách nhiệm.</em></h2></div>
+      <p>Mọi phân tích chỉ áp dụng cho binary thuộc quyền sở hữu, được ủy quyền bằng văn bản, hoặc mã nguồn mở. Không phát tán crack, không né DRM/license để dùng lậu. Malware chỉ chạy trong VM cô lập, snapshot sẵn sàng rollback.</p>
+      <a href="macos-reverse-engineering-10weeks/references/safety.html">Đọc nguyên tắc an toàn <span>→</span></a>
+    </section>
+  </main>
+
+  <footer>
+    <a class="brand footer-brand" href="#top"><span class="brand-mark">R</span><span>REVERSE<span>ENGINE</span></span></a>
+    <p>Tài nguyên học reverse engineering mở · Xây dựng để học, chia sẻ để cùng tiến bộ.</p>
+    <p class="copyright">© <span id="year"></span> ReverseEngine</p>
+  </footer>
+  <script src="script.js"></script>
+</body>
+</html>
