@@ -6,26 +6,15 @@ permalink: /macos-reverse-engineering-10weeks/code/week06/README.html
 
 # Tuần 06 — Code mẫu
 
-## `swizzle_demo.m`
-Demo method swizzling Objective-C.
+## `swizzle_demo.cpp` (C++17, minh hoạ chi tiết)
+Xem comment đầu file để biết mục tiêu/đầu vào/đầu ra/an toàn.
 
 ```bash
-clang -framework Foundation swizzle_demo.m -o /tmp/swizzle && /tmp/swizzle
+g++ -std=c++17 -O2 swizzle_demo.cpp -o demo && ./demo
 ```
 
-## `dylib_inject_demo.m`
-Demo dylib injection bằng `DYLD_INSERT_LIBRARIES` trên app của bạn.
+## Các file khác
 
-```bash
-clang -dynamiclib dylib_inject_demo.m -o /tmp/inject.dylib
-DYLD_INSERT_LIBRARIES=/tmp/inject.dylib /tmp/hello
-```
-
-## `frida_objc_hook.js`
-Hook method Objective-C bằng Frida.
-
-```bash
-frida -n <YourApp> -l frida_objc_hook.js
-```
-
-**An toàn:** chỉ dùng trên app do chính bạn viết, trong VM lab.
+- `dylib_inject_demo.m`
+- `frida_objc_hook.js`
+- `swizzle_demo.m`

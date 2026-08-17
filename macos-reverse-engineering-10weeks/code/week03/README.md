@@ -6,18 +6,14 @@ permalink: /macos-reverse-engineering-10weeks/code/week03/README.html
 
 # Tuần 03 — Code mẫu
 
-## `objc_meta.py`
-Mô phỏng metadata Objective-C (isa, method list, objc_msgSend).
+## `objc_runtime.cpp` (C++17, minh hoạ chi tiết)
+Xem comment đầu file để biết mục tiêu/đầu vào/đầu ra/an toàn.
 
 ```bash
-python3 objc_meta.py
+g++ -std=c++17 -O2 objc_runtime.cpp -o demo && ./demo
 ```
 
-## `swift_demangle_demo.py`
-Minh hoạ symbol Swift mangled và cách đọc.
+## Các file khác
 
-```bash
-python3 swift_demangle_demo.py
-```
-
-**An toàn:** dữ liệu giả, không đụng app thật.
+- `objc_meta.py`
+- `swift_demangle_demo.py`

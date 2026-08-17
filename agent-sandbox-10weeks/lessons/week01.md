@@ -36,7 +36,7 @@ AI agent (ví dụ coding agent) cần chạy lệnh, cài package, đọc/ghi f
 
 ## Liên kết code mẫu
 
-Xem [code/week01/README.md](../code/week01/README.md) — script `risk_model.py`.
+Xem [code/week01/README.md](../code/week01/README.md) — `risk_model.cpp` (C++ chi tiết) và `risk_model.py` (Python mô phỏng nhanh).
 
 ## Thảo luận
 

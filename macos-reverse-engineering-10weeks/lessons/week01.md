@@ -41,7 +41,7 @@ Khác với Windows có Flare VM, macOS **không có bộ cài sẵn** — cần
 
 ## Liên kết code mẫu
 
-Xem [code/week01/README.md](../code/week01/README.md) — script `macos_env_check.sh`.
+Xem [code/week01/README.md](../code/week01/README.md) — script `macos_env_check.sh` · `env_check.cpp` (C++17 chi tiết)
 
 ## Thảo luận
 

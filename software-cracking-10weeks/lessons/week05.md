@@ -35,7 +35,7 @@ Khi muốn hiểu một hàm kiểm tra serial làm gì, bạn step into nó; kh
 
 ## Liên kết code mẫu
 
-Xem [code/week05/README.md](../code/week05/README.md) — script `step_sim.py`.
+Xem [code/week05/README.md](../code/week05/README.md) — script `step_sim.py` · `step_sim.cpp` (C++17 chi tiết)
 
 ## Thảo luận
 

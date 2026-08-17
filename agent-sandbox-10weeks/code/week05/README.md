@@ -6,11 +6,18 @@ permalink: /agent-sandbox-10weeks/code/week05/README.html
 
 # Tuần 05 — Code mẫu
 
-## `cow_storage.py`
-Mô phỏng Copy-on-Write (shared extent) khi clone/snapshot.
+## `cow.cpp` (C++17, minh hoạ chi tiết)
+Copy-on-Write với refcount (chia sẻ extent + tách khi ghi).
+
+```bash
+g++ -std=c++17 -O2 cow.cpp -o demo && ./demo
+```
+
+## `cow_storage.py` (Python, mô phỏng nhanh)
+Mô phỏng shared extent + CoW.
 
 ```bash
 python cow_storage.py
 ```
 
-**An toàn:** script chỉ mô phỏng bằng dữ liệu, không chạy tool/lệnh thật, không đụng hệ thống.
+**An toàn:** cả hai đều thuần tính toán — không gọi syscall thật, không đụng filesystem/mạng, không chạy lệnh thật.

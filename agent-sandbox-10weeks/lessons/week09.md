@@ -34,7 +34,7 @@ permalink: /agent-sandbox-10weeks/lessons/week09.html
 
 ## Liên kết code mẫu
 
-Xem [code/week09/README.md](../code/week09/README.md) — script `lifecycle_sim.py`.
+Xem [code/week09/README.md](../code/week09/README.md) — `lifecycle.cpp` (C++ chi tiết) và `lifecycle_sim.py` (Python mô phỏng nhanh).
 
 ## Thảo luận
 

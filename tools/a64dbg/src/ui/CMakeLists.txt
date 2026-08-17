@@ -11,5 +11,5 @@ add_library(a64dbg_ui STATIC
 )
 
 target_include_directories(a64dbg_ui PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
-target_link_libraries(a64dbg_ui PUBLIC Qt6::Widgets a64dbg_core a64dbg_disasm)
+target_link_libraries(a64dbg_ui PUBLIC Qt6::Widgets a64dbg_core a64dbg_disasm a64dbg_plugin)
 a64dbg_enable_warnings(a64dbg_ui)

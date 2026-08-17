@@ -37,7 +37,7 @@ Sandbox không được phép "tự do" ra Internet — nếu không, agent bị
 
 ## Liên kết code mẫu
 
-Xem [code/week07/README.md](../code/week07/README.md) — script `egress_filter.py`.
+Xem [code/week07/README.md](../code/week07/README.md) — `egress.cpp` (C++ chi tiết) và `egress_filter.py` (Python mô phỏng nhanh).
 
 ## Thảo luận
 

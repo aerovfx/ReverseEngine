@@ -36,7 +36,7 @@ Trong debugger, bạn thấy ba cột: **địa chỉ**, **mã máy (hex)**, **a
 
 ## Liên kết code mẫu
 
-Xem [code/week04/README.md](../code/week04/README.md) — script `jump_sim.py`.
+Xem [code/week04/README.md](../code/week04/README.md) — script `jump_sim.py` · `jump_sim.cpp` (C++17 chi tiết)
 
 ## Thảo luận
 

@@ -47,7 +47,7 @@ Interceptor.attach(cls["-doThing:"].implementation, {
 
 ## Liên kết code mẫu
 
-Xem [code/week06/README.md](../code/week06/README.md) — `swizzle_demo.m`, `dylib_inject_demo.m`, `frida_objc_hook.js`.
+Xem [code/week06/README.md](../code/week06/README.md) — `swizzle_demo.m`, `dylib_inject_demo.m`, `frida_objc_hook.js` · `swizzle_demo.cpp` (C++17 chi tiết)
 
 ## Thảo luận
 

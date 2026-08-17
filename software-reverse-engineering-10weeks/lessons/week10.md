@@ -154,9 +154,9 @@ capstone/
 Không đạt nếu target ngoài phạm vi, dùng phần mềm thương mại để crack, tạo serial/keygen hoặc nộp patched third-party binary.
 ## 20 code minh họa của tuần
 
-- [Mở mục lục code tuần 10](../code/week10/README.md), học lần lượt từ `01_...` đến `20_...`.
+- [Mở mục lục code tuần 10](../code/week10/README.md), học lần lượt từ `01_...` đến `20_...` · `obfuscation.cpp` (C++17 chi tiết)
 
 <!-- AUTO-GENERATED-WEEKLY-CODE -->
 ## 20 code minh họa của tuần
 
-- [Mở mục lục code tuần 10](../code/week10/README.md), học lần lượt từ `01_...` đến `20_...`.
+- [Mở mục lục code tuần 10](../code/week10/README.md), học lần lượt từ `01_...` đến `20_...` · `obfuscation.cpp` (C++17 chi tiết)

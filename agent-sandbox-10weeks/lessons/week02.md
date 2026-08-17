@@ -38,7 +38,7 @@ permalink: /agent-sandbox-10weeks/lessons/week02.html
 
 ## Liên kết code mẫu
 
-Xem [code/week02/README.md](../code/week02/README.md) — script `isolation_levels.py`.
+Xem [code/week02/README.md](../code/week02/README.md) — `isolation_levels.cpp` (C++ chi tiết) và `isolation_levels.py` (Python mô phỏng nhanh).
 
 ## Thảo luận
 

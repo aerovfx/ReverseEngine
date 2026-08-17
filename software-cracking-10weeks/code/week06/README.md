@@ -6,11 +6,13 @@ permalink: /software-cracking-10weeks/code/week06/README.html
 
 # Tuần 06 — Code mẫu
 
-## `breakpoint_sim.py`
-Mô phỏng breakpoint phần mềm (INT3/0xCC).
+## `breakpoint_sim.cpp` (C++17, minh hoạ chi tiết)
+Xem comment đầu file để biết mục tiêu/đầu vào/đầu ra/an toàn.
 
 ```bash
-python breakpoint_sim.py --bp 0040100A
+g++ -std=c++17 -O2 breakpoint_sim.cpp -o demo && ./demo
 ```
 
-**An toàn:** script chỉ mô phỏng/đọc dữ liệu, không thực thi binary, không sửa file gốc.
+## Các file khác
+
+- `breakpoint_sim.py`

@@ -52,7 +52,7 @@ Interceptor.attach(Module.findExportByName(null, "strcmp"), {
 
 ## Liên kết code mẫu
 
-Xem [code/week05/README.md](../code/week05/README.md) — `frida_hook_template.js`, `dynamic_log_parser.py`.
+Xem [code/week05/README.md](../code/week05/README.md) — `frida_hook_template.js`, `dynamic_log_parser.py` · `log_parser.cpp` (C++17 chi tiết)
 
 ## Thảo luận
 

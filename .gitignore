@@ -8,4 +8,4 @@
 .DS_Store
 
 # a64dbg — cây build CMake (FetchContent tải về cũng nằm trong build/)
-/a64dbg/build*/
+/tools/a64dbg/build*/

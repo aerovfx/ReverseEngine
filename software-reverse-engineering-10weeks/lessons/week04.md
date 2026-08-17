@@ -414,9 +414,9 @@ Bạn đang trace một vòng lặp chạy 1000 lần và chỉ muốn dừng l�
 * Đọc thành thạo **Call Stack** để truy vết nguồn gốc lời gọi hàm.
 ## 20 code minh họa của tuần
 
-- [Mở mục lục code tuần 04](../code/week04/README.md), học lần lượt từ `01_...` đến `20_...`.
+- [Mở mục lục code tuần 04](../code/week04/README.md), học lần lượt từ `01_...` đến `20_...` · `debugger.cpp` (C++17 chi tiết)
 
 <!-- AUTO-GENERATED-WEEKLY-CODE -->
 ## 20 code minh họa của tuần
 
-- [Mở mục lục code tuần 04](../code/week04/README.md), học lần lượt từ `01_...` đến `20_...`.
+- [Mở mục lục code tuần 04](../code/week04/README.md), học lần lượt từ `01_...` đến `20_...` · `debugger.cpp` (C++17 chi tiết)

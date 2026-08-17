@@ -39,7 +39,7 @@ Quy trình phân tích mẫu:
 
 ## Liên kết code mẫu
 
-Xem [code/week08/README.md](../code/week08/README.md) — `ioc_report.py`, `launchagent_scan.sh`.
+Xem [code/week08/README.md](../code/week08/README.md) — `ioc_report.py`, `launchagent_scan.sh` · `ioc_report.cpp` (C++17 chi tiết)
 
 ## Thảo luận
 

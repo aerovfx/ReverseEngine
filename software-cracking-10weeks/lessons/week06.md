@@ -37,7 +37,7 @@ Mẹo quan trọng: dùng **String references** (chuột phải → Search for �
 
 ## Liên kết code mẫu
 
-Xem [code/week06/README.md](../code/week06/README.md) — script `breakpoint_sim.py`.
+Xem [code/week06/README.md](../code/week06/README.md) — script `breakpoint_sim.py` · `breakpoint_sim.cpp` (C++17 chi tiết)
 
 ## Thảo luận
 

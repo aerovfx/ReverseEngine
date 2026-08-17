@@ -47,7 +47,7 @@ lipo -info hello
 
 ## Liên kết code mẫu
 
-Xem [code/week02/README.md](../code/week02/README.md) — `macho_parser.py`, `fat_detector.py`.
+Xem [code/week02/README.md](../code/week02/README.md) — `macho_parser.py`, `fat_detector.py` · `macho_parser.cpp` (C++17 chi tiết)
 
 ## Thảo luận
 

@@ -37,7 +37,7 @@ Hiểu entry point là bước đầu để biết "bắt đầu đọc chương
 
 ## Liên kết code mẫu
 
-Xem [code/week03/README.md](../code/week03/README.md) — script `pe_entry_point.py`.
+Xem [code/week03/README.md](../code/week03/README.md) — script `pe_entry_point.py` · `pe_entry_point.cpp` (C++17 chi tiết)
 
 ## Thảo luận
 

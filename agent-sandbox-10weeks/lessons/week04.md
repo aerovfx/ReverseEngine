@@ -36,7 +36,7 @@ Khởi động VM bình thường tốn vài giây (POST, kernel boot, init). Cu
 
 ## Liên kết code mẫu
 
-Xem [code/week04/README.md](../code/week04/README.md) — script `snapshot_sim.py`.
+Xem [code/week04/README.md](../code/week04/README.md) — `snapshot.cpp` (C++ chi tiết) và `snapshot_sim.py` (Python mô phỏng nhanh).
 
 ## Thảo luận
 

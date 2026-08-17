@@ -449,9 +449,9 @@ Kỹ thuật "Reversing Jump" (đảo ngược lệnh nhảy) là gì và trong 
 * Có thể **vẽ Control Flow Graph** từ đoạn Assembly có nhánh điều kiện.
 ## 20 code minh họa của tuần
 
-- [Mở mục lục code tuần 03](../code/week03/README.md), học lần lượt từ `01_...` đến `20_...`.
+- [Mở mục lục code tuần 03](../code/week03/README.md), học lần lượt từ `01_...` đến `20_...` · `registers.cpp` (C++17 chi tiết)
 
 <!-- AUTO-GENERATED-WEEKLY-CODE -->
 ## 20 code minh họa của tuần
 
-- [Mở mục lục code tuần 03](../code/week03/README.md), học lần lượt từ `01_...` đến `20_...`.
+- [Mở mục lục code tuần 03](../code/week03/README.md), học lần lượt từ `01_...` đến `20_...` · `registers.cpp` (C++17 chi tiết)

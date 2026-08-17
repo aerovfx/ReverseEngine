@@ -37,7 +37,7 @@ Phân tích PE (import table) cho biết chương trình dùng những API nào 
 
 ## Liên kết code mẫu
 
-Xem [code/week09/README.md](../code/week09/README.md) — script `winapi_sim.py`.
+Xem [code/week09/README.md](../code/week09/README.md) — script `winapi_sim.py` · `winapi_sim.cpp` (C++17 chi tiết)
 
 ## Thảo luận
 

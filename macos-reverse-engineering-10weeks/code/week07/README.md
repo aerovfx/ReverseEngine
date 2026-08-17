@@ -6,19 +6,14 @@ permalink: /macos-reverse-engineering-10weeks/code/week07/README.html
 
 # Tuần 07 — Code mẫu
 
-## `launchagent_gen.py`
-Sinh nội dung LaunchAgent plist mẫu (không ghi hệ thống).
+## `plist_parser.cpp` (C++17, minh hoạ chi tiết)
+Xem comment đầu file để biết mục tiêu/đầu vào/đầu ra/an toàn.
 
 ```bash
-python3 launchagent_gen.py com.example.app
+g++ -std=c++17 -O2 plist_parser.cpp -o demo && ./demo
 ```
 
-## `plist_parse.py`
-Parse plist XML đơn giản.
+## Các file khác
 
-```bash
-python3 plist_parse.py            # plist giả
-python3 plist_parse.py <file>
-```
-
-**An toàn:** chỉ sinh/đọc; không tự đặt persistence trên máy thật.
+- `launchagent_gen.py`
+- `plist_parse.py`

@@ -199,9 +199,9 @@ Tại sao việc tìm kiếm chuỗi văn bản (String References) đôi khi th
 * Trace và định vị chính xác vị trí hàm kiểm tra dữ liệu đầu vào.
 ## 20 code minh họa của tuần
 
-- [Mở mục lục code tuần 05](../code/week05/README.md), học lần lượt từ `01_...` đến `20_...`.
+- [Mở mục lục code tuần 05](../code/week05/README.md), học lần lượt từ `01_...` đến `20_...` · `winapi_gui.cpp` (C++17 chi tiết)
 
 <!-- AUTO-GENERATED-WEEKLY-CODE -->
 ## 20 code minh họa của tuần
 
-- [Mở mục lục code tuần 05](../code/week05/README.md), học lần lượt từ `01_...` đến `20_...`.
+- [Mở mục lục code tuần 05](../code/week05/README.md), học lần lượt từ `01_...` đến `20_...` · `winapi_gui.cpp` (C++17 chi tiết)

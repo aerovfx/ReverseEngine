@@ -44,7 +44,7 @@ Khi RE app, cần kiểm tra app có tạo LaunchAgent không — đó là hành
 
 ## Liên kết code mẫu
 
-Xem [code/week07/README.md](../code/week07/README.md) — `launchagent_gen.py`, `plist_parse.py`.
+Xem [code/week07/README.md](../code/week07/README.md) — `launchagent_gen.py`, `plist_parse.py` · `plist_parser.cpp` (C++17 chi tiết)
 
 ## Thảo luận
 

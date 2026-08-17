@@ -344,9 +344,9 @@ Khi nào nên dùng **Restore Original Bytes** trong x64dbg?
 * Ghi lại hash SHA-256 trước/sau Patch để đảm bảo Chain of Custody trong Lab.
 ## 20 code minh họa của tuần
 
-- [Mở mục lục code tuần 06](../code/week06/README.md), học lần lượt từ `01_...` đến `20_...`.
+- [Mở mục lục code tuần 06](../code/week06/README.md), học lần lượt từ `01_...` đến `20_...` · `patcher.cpp` (C++17 chi tiết)
 
 <!-- AUTO-GENERATED-WEEKLY-CODE -->
 ## 20 code minh họa của tuần
 
-- [Mở mục lục code tuần 06](../code/week06/README.md), học lần lượt từ `01_...` đến `20_...`.
+- [Mở mục lục code tuần 06](../code/week06/README.md), học lần lượt từ `01_...` đến `20_...` · `patcher.cpp` (C++17 chi tiết)

@@ -6,11 +6,13 @@ permalink: /software-cracking-10weeks/code/week08/README.html
 
 # Tuần 08 — Code mẫu
 
-## `patcher.py`
-Vá byte trên bản sao, kèm backup + hash trước/sau.
+## `patcher.cpp` (C++17, minh hoạ chi tiết)
+Xem comment đầu file để biết mục tiêu/đầu vào/đầu ra/an toàn.
 
 ```bash
-python patcher.py --file a.exe --offset 100 --bytes 9090
+g++ -std=c++17 -O2 patcher.cpp -o demo && ./demo
 ```
 
-**An toàn:** script chỉ mô phỏng/đọc dữ liệu, không thực thi binary, không sửa file gốc.
+## Các file khác
+
+- `patcher.py`

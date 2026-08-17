@@ -6,11 +6,13 @@ permalink: /software-cracking-10weeks/code/week07/README.html
 
 # Tuần 07 — Code mẫu
 
-## `reverse_jump.py`
-Mô phỏng đảo nhảy điều kiện để quan sát nhánh ẩn.
+## `reverse_jump.cpp` (C++17, minh hoạ chi tiết)
+Xem comment đầu file để biết mục tiêu/đầu vào/đầu ra/an toàn.
 
 ```bash
-python reverse_jump.py
+g++ -std=c++17 -O2 reverse_jump.cpp -o demo && ./demo
 ```
 
-**An toàn:** script chỉ mô phỏng/đọc dữ liệu, không thực thi binary, không sửa file gốc.
+## Các file khác
+
+- `reverse_jump.py`

@@ -6,18 +6,14 @@ permalink: /macos-reverse-engineering-10weeks/code/week10/README.html
 
 # Tuần 10 — Code mẫu
 
-## `report_builder.py`
-Sinh khung báo cáo RE tổng hợp.
+## `report_builder.cpp` (C++17, minh hoạ chi tiết)
+Xem comment đầu file để biết mục tiêu/đầu vào/đầu ra/an toàn.
 
 ```bash
-python3 report_builder.py
+g++ -std=c++17 -O2 report_builder.cpp -o demo && ./demo
 ```
 
-## `rechecklist.sh`
-Checklist RE tổng hợp cho việc phân tích.
+## Các file khác
 
-```bash
-bash rechecklist.sh
-```
-
-**An toàn:** chỉ đọc; nhắc pháp lý không patch app người khác.
+- `rechecklist.sh`
+- `report_builder.py`

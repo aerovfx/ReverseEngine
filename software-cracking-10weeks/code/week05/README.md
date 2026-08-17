@@ -6,11 +6,13 @@ permalink: /software-cracking-10weeks/code/week05/README.html
 
 # Tuần 05 — Code mẫu
 
-## `step_sim.py`
-Mô phỏng step over (F8) và step into (F7).
+## `step_sim.cpp` (C++17, minh hoạ chi tiết)
+Xem comment đầu file để biết mục tiêu/đầu vào/đầu ra/an toàn.
 
 ```bash
-python step_sim.py
+g++ -std=c++17 -O2 step_sim.cpp -o demo && ./demo
 ```
 
-**An toàn:** script chỉ mô phỏng/đọc dữ liệu, không thực thi binary, không sửa file gốc.
+## Các file khác
+
+- `step_sim.py`

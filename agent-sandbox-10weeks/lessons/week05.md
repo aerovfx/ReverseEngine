@@ -38,7 +38,7 @@ Kết quả: snapshot/clone **O(1)** về thời gian (chỉ tạo metadata), g�
 
 ## Liên kết code mẫu
 
-Xem [code/week05/README.md](../code/week05/README.md) — script `cow_storage.py`.
+Xem [code/week05/README.md](../code/week05/README.md) — `cow.cpp` (C++ chi tiết) và `cow_storage.py` (Python mô phỏng nhanh).
 
 ## Thảo luận
 

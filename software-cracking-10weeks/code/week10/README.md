@@ -6,11 +6,13 @@ permalink: /software-cracking-10weeks/code/week10/README.html
 
 # Tuần 10 — Code mẫu
 
-## `serial_check.py`
-Mô phỏng thuật toán kiểm tra serial + keygen hợp pháp.
+## `serial_check.cpp` (C++17, minh hoạ chi tiết)
+Xem comment đầu file để biết mục tiêu/đầu vào/đầu ra/an toàn.
 
 ```bash
-python serial_check.py --keygen Alice
+g++ -std=c++17 -O2 serial_check.cpp -o demo && ./demo
 ```
 
-**An toàn:** script chỉ mô phỏng/đọc dữ liệu, không thực thi binary, không sửa file gốc.
+## Các file khác
+
+- `serial_check.py`

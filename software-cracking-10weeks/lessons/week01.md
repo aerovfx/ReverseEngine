@@ -42,7 +42,7 @@ Triage (DIE) → Entry point → Step → Breakpoint → Reversing jump → Patc
 
 ## Liên kết code mẫu
 
-Xem [code/week01/README.md](../code/week01/README.md) — script `lab_checklist.py`.
+Xem [code/week01/README.md](../code/week01/README.md) — script `lab_checklist.py` · `lab_checklist.cpp` (C++17 chi tiết)
 
 ## Thảo luận
 

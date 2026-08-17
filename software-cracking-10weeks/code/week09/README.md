@@ -6,11 +6,13 @@ permalink: /software-cracking-10weeks/code/week09/README.html
 
 # Tuần 09 — Code mẫu
 
-## `winapi_sim.py`
-Mô phỏng luồng GUI: GetWindowText → so sánh → MessageBox.
+## `winapi_sim.cpp` (C++17, minh hoạ chi tiết)
+Xem comment đầu file để biết mục tiêu/đầu vào/đầu ra/an toàn.
 
 ```bash
-python winapi_sim.py --serial RE-2024
+g++ -std=c++17 -O2 winapi_sim.cpp -o demo && ./demo
 ```
 
-**An toàn:** script chỉ mô phỏng/đọc dữ liệu, không thực thi binary, không sửa file gốc.
+## Các file khác
+
+- `winapi_sim.py`

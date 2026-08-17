@@ -39,7 +39,7 @@ Khi `input != serial`, ZF=0, `JE` không nhảy → chương trình in "try hard
 
 ## Liên kết code mẫu
 
-Xem [code/week07/README.md](../code/week07/README.md) — script `reverse_jump.py`.
+Xem [code/week07/README.md](../code/week07/README.md) — script `reverse_jump.py` · `reverse_jump.cpp` (C++17 chi tiết)
 
 ## Thảo luận
 

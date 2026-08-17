@@ -45,7 +45,7 @@ sb.kill()
 
 ## Liên kết code mẫu
 
-Xem [code/week08/README.md](../code/week08/README.md) — script `tool_runner.py`.
+Xem [code/week08/README.md](../code/week08/README.md) — `tool_runner.cpp` (C++ chi tiết) và `tool_runner.py` (Python mô phỏng nhanh).
 
 ## Thảo luận
 

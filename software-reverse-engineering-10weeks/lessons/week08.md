@@ -114,9 +114,9 @@ Handler phải validate length/format, không block UI thread, xử lý cancel v
 Nộp event map, test matrix, debugging timeline và một source-level hardening change. Chấm: event flow 25, trust boundary 25, tests 20, fix 20, evidence 10.
 ## 20 code minh họa của tuần
 
-- [Mở mục lục code tuần 08](../code/week08/README.md), học lần lượt từ `01_...` đến `20_...`.
+- [Mở mục lục code tuần 08](../code/week08/README.md), học lần lượt từ `01_...` đến `20_...` · `keygen.cpp` (C++17 chi tiết)
 
 <!-- AUTO-GENERATED-WEEKLY-CODE -->
 ## 20 code minh họa của tuần
 
-- [Mở mục lục code tuần 08](../code/week08/README.md), học lần lượt từ `01_...` đến `20_...`.
+- [Mở mục lục code tuần 08](../code/week08/README.md), học lần lượt từ `01_...` đến `20_...` · `keygen.cpp` (C++17 chi tiết)

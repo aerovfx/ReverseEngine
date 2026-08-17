@@ -40,7 +40,7 @@ permalink: /macos-reverse-engineering-10weeks/lessons/week03.html
 
 ## Liên kết code mẫu
 
-Xem [code/week03/README.md](../code/week03/README.md) — `objc_meta.py` (mô phỏng metadata ObjC), `swift_demangle_demo.py`.
+Xem [code/week03/README.md](../code/week03/README.md) — `objc_meta.py` (mô phỏng metadata ObjC), `swift_demangle_demo.py` · `objc_runtime.cpp` (C++17 chi tiết)
 
 ## Thảo luận
 

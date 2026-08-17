@@ -6,19 +6,14 @@ permalink: /macos-reverse-engineering-10weeks/code/week05/README.html
 
 # Tuần 05 — Code mẫu
 
-## `frida_hook_template.js`
-Template hook hàm bằng Frida (ví dụ `strcmp`).
+## `log_parser.cpp` (C++17, minh hoạ chi tiết)
+Xem comment đầu file để biết mục tiêu/đầu vào/đầu ra/an toàn.
 
 ```bash
-frida -n <YourApp> -l frida_hook_template.js
+g++ -std=c++17 -O2 log_parser.cpp -o demo && ./demo
 ```
 
-## `dynamic_log_parser.py`
-Phân tích log dynamic giả (file/network/process).
+## Các file khác
 
-```bash
-python3 dynamic_log_parser.py            # log giả
-python3 dynamic_log_parser.py <file>
-```
-
-**An toàn:** chỉ hook app của chính bạn / được cấp phép.
+- `dynamic_log_parser.py`
+- `frida_hook_template.js`

@@ -33,7 +33,7 @@ DIE trả lời câu hỏi đầu tiên của mọi ca phân tích: *"file này 
 
 ## Liên kết code mẫu
 
-Xem [code/week02/README.md](../code/week02/README.md) — script `die_sim.py`.
+Xem [code/week02/README.md](../code/week02/README.md) — script `die_sim.py` · `die_sim.cpp` (C++17 chi tiết)
 
 ## Thảo luận
 

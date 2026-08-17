@@ -419,9 +419,9 @@ Tại sao phải giữ nguyên file gốc (Sample) ở chế độ Read-Only và
 * Luôn **ghi chú và chụp ảnh màn hình** để đảm bảo khả năng báo cáo và tái lập kết quả.
 ## 20 code minh họa của tuần
 
-- [Mở mục lục code tuần 01](../code/week01/README.md), học lần lượt từ `01_...` đến `20_...`.
+- [Mở mục lục code tuần 01](../code/week01/README.md), học lần lượt từ `01_...` đến `20_...` · `lab_checklist.cpp` (C++17 chi tiết)
 
 <!-- AUTO-GENERATED-WEEKLY-CODE -->
 ## 20 code minh họa của tuần
 
-- [Mở mục lục code tuần 01](../code/week01/README.md), học lần lượt từ `01_...` đến `20_...`.
+- [Mở mục lục code tuần 01](../code/week01/README.md), học lần lượt từ `01_...` đến `20_...` · `lab_checklist.cpp` (C++17 chi tiết)

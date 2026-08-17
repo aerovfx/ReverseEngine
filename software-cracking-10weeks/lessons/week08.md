@@ -36,7 +36,7 @@ Trong x64dbg: sửa lệnh → chuột phải → **Patch file** (hoặc Copy to
 
 ## Liên kết code mẫu
 
-Xem [code/week08/README.md](../code/week08/README.md) — script `patcher.py`.
+Xem [code/week08/README.md](../code/week08/README.md) — script `patcher.py` · `patcher.cpp` (C++17 chi tiết)
 
 ## Thảo luận
 

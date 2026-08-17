@@ -6,11 +6,13 @@ permalink: /software-cracking-10weeks/code/week02/README.html
 
 # Tuần 02 — Code mẫu
 
-## `die_sim.py`
-Đọc magic bytes và đoán định dạng/compiler như Detect It Easy.
+## `die_sim.cpp` (C++17, minh hoạ chi tiết)
+Xem comment đầu file để biết mục tiêu/đầu vào/đầu ra/an toàn.
 
 ```bash
-python die_sim.py <file>
+g++ -std=c++17 -O2 die_sim.cpp -o demo && ./demo
 ```
 
-**An toàn:** script chỉ mô phỏng/đọc dữ liệu, không thực thi binary, không sửa file gốc.
+## Các file khác
+
+- `die_sim.py`

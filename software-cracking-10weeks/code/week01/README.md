@@ -6,11 +6,13 @@ permalink: /software-cracking-10weeks/code/week01/README.html
 
 # Tuần 01 — Code mẫu
 
-## `lab_checklist.py`
-Sinh checklist môi trường lab cô lập (RoE, VM, snapshot, hash).
+## `lab_checklist.cpp` (C++17, minh hoạ chi tiết)
+Xem comment đầu file để biết mục tiêu/đầu vào/đầu ra/an toàn.
 
 ```bash
-python lab_checklist.py --out checklist.txt
+g++ -std=c++17 -O2 lab_checklist.cpp -o demo && ./demo
 ```
 
-**An toàn:** script chỉ mô phỏng/đọc dữ liệu, không thực thi binary, không sửa file gốc.
+## Các file khác
+
+- `lab_checklist.py`

@@ -280,9 +280,9 @@ Vì sao lại có hai phiên bản executable là `x32dbg.exe` và `x64dbg.exe` 
 * Hiểu cách thức hoạt động cơ bản của **x64dbg** và bộ thao tác phím tắt gỡ lỗi (F2, F7, F8, F9).
 ## 20 code minh họa của tuần
 
-- [Mở mục lục code tuần 02](../code/week02/README.md), học lần lượt từ `01_...` đến `20_...`.
+- [Mở mục lục code tuần 02](../code/week02/README.md), học lần lượt từ `01_...` đến `20_...` · `pe_triage.cpp` (C++17 chi tiết)
 
 <!-- AUTO-GENERATED-WEEKLY-CODE -->
 ## 20 code minh họa của tuần
 
-- [Mở mục lục code tuần 02](../code/week02/README.md), học lần lượt từ `01_...` đến `20_...`.
+- [Mở mục lục code tuần 02](../code/week02/README.md), học lần lượt từ `01_...` đến `20_...` · `pe_triage.cpp` (C++17 chi tiết)

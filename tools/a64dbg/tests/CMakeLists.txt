@@ -129,3 +129,9 @@ add_custom_command(TARGET test_plugin_integration POST_BUILD
   VERBATIM)
 add_test(NAME plugin_integration COMMAND test_plugin_integration)
 set_tests_properties(plugin_integration PROPERTIES TIMEOUT 20)
+
+add_executable(test_script test_script.cpp)
+target_link_libraries(test_script PRIVATE Qt6::Core a64dbg_script)
+a64dbg_enable_warnings(test_script)
+add_test(NAME script COMMAND test_script)
+set_tests_properties(script PROPERTIES TIMEOUT 20)

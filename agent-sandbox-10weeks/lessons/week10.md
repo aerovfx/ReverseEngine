@@ -38,7 +38,7 @@ Một checklist hardening tốt trả lời: *"nếu agent bị prompt injection
 
 ## Liên kết code mẫu
 
-Xem [code/week10/README.md](../code/week10/README.md) — script `harden_check.py`.
+Xem [code/week10/README.md](../code/week10/README.md) — `harden_check.cpp` (C++ chi tiết) và `harden_check.py` (Python mô phỏng nhanh).
 
 ## Thảo luận
 

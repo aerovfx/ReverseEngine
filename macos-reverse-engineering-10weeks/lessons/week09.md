@@ -42,7 +42,7 @@ Khi RE, ta tìm **điểm quyết định** (branch) — hàm trả về "hợp 
 
 ## Liên kết code mẫu
 
-Xem [code/week09/README.md](../code/week09/README.md) — `license_check.c`, `frida_license_hook.js`.
+Xem [code/week09/README.md](../code/week09/README.md) — `license_check.c`, `frida_license_hook.js` · `license_check.cpp` (C++17 chi tiết)
 
 ## Thảo luận
 

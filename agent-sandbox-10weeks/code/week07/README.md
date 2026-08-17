@@ -6,11 +6,18 @@ permalink: /agent-sandbox-10weeks/code/week07/README.html
 
 # Tuần 07 — Code mẫu
 
-## `egress_filter.py`
-Mô phỏng egress zero-trust: allowlist + TLS + credential injection.
+## `egress.cpp` (C++17, minh hoạ chi tiết)
+Egress zero-trust: domain allowlist + credential injection.
+
+```bash
+g++ -std=c++17 -O2 egress.cpp -o demo && ./demo
+```
+
+## `egress_filter.py` (Python, mô phỏng nhanh)
+Mô phỏng allowlist + injection.
 
 ```bash
 python egress_filter.py
 ```
 
-**An toàn:** script chỉ mô phỏng bằng dữ liệu, không chạy tool/lệnh thật, không đụng hệ thống.
+**An toàn:** cả hai đều thuần tính toán — không gọi syscall thật, không đụng filesystem/mạng, không chạy lệnh thật.

@@ -44,9 +44,17 @@ kern_return_t defaultReply(thread_state_t new_state, mach_msg_type_number_t* new
 }  // namespace
 
 extern "C" kern_return_t catch_mach_exception_raise(
-    mach_port_t /*exception_port*/, mach_port_t /*thread*/, mach_port_t /*task*/,
+    mach_port_t exception_port, mach_port_t thread, mach_port_t task,
     exception_type_t /*exception*/, mach_exception_data_t /*code*/,
     mach_msg_type_number_t /*codeCnt*/) {
+  // Rò rỉ Mach port: exception message gửi kèm thread/task SEND right → phải deallocate.
+  (void)exception_port;
+  if (thread != MACH_PORT_NULL) {
+    mach_port_deallocate(mach_task_self(), thread);
+  }
+  if (task != MACH_PORT_NULL) {
+    mach_port_deallocate(mach_task_self(), task);
+  }
   return KERN_SUCCESS;
 }
 
@@ -59,15 +67,24 @@ extern "C" kern_return_t catch_mach_exception_raise_state(
 }
 
 extern "C" kern_return_t catch_mach_exception_raise_state_identity(
-    mach_port_t /*exception_port*/, mach_port_t /*thread*/, mach_port_t /*task*/,
+    mach_port_t exception_port, mach_port_t thread, mach_port_t task,
     exception_type_t exception, mach_exception_data_t code, mach_msg_type_number_t codeCnt,
     int* /*flavor*/, thread_state_t old_state, mach_msg_type_number_t old_stateCnt,
     thread_state_t new_state, mach_msg_type_number_t* new_stateCnt) {
+  (void)exception_port;
+  kern_return_t kr = defaultReply(new_state, new_stateCnt, old_state, old_stateCnt);
   if (g_backend != nullptr) {
-    return g_backend->handleException(exception, code, codeCnt, old_state, old_stateCnt,
-                                      new_state, new_stateCnt);
+    kr = g_backend->handleException(exception, code, codeCnt, old_state, old_stateCnt,
+                                    new_state, new_stateCnt);
   }
-  return defaultReply(new_state, new_stateCnt, old_state, old_stateCnt);
+  // Deallocate thread/task port nhận từ exception message (tránh rò rỉ).
+  if (thread != MACH_PORT_NULL) {
+    mach_port_deallocate(mach_task_self(), thread);
+  }
+  if (task != MACH_PORT_NULL) {
+    mach_port_deallocate(mach_task_self(), task);
+  }
+  return kr;
 }
 
 // ---------------------------------------------------------------------------
@@ -160,7 +177,10 @@ bool MachBackend::detach() {
                          reinterpret_cast<thread_state_t>(&ds), count);
       }
     }
-    m_hwBps.clear();
+    {
+      std::lock_guard<std::mutex> lk(m_hwBpsMtx);
+      m_hwBps.clear();
+    }
   }
 
   m_stop = true;

@@ -40,7 +40,8 @@
 | `src/lldb` | `a64dbg_lldb` | LLDBBackend + ISymbolProvider | defer (SB API headers không có trong Xcode) |
 | `src/app` | `a64dbg` | main + MainWindow + theme | Phase 2 ✓ (wire controller) |
 | `src/ui` | `a64dbg_ui` | DebuggerController + DisasmView/DumpView | Phase 5 ✓ (step over/out + stack walk/search/patch) |
-| `src/plugin` | `a64dbg_plugin` | PluginHost + scripting | Phase 6 |
+| `src/plugin` | `a64dbg_plugin` | PluginHost (dlopen + C ABI `dbg_sdk.h`) | Phase 6 ✓ |
+| `src/script` | `a64dbg_script` | ScriptEngine (QJSEngine + `debug` object) | Phase 6 ✓ |
 
 ## Cấu trúc cây
 
@@ -61,6 +62,7 @@ a64dbg/
 - **Capstone** (5.0.9, ghim qua FetchContent, build diet ARM64+X86): Phase 0 đã nối pipeline (xem `src/disasm/Disassembler.cpp`).
 - **Keystone**: Phase 5 (assemble/patch). Kéo khi tới.
 - **LLDB SB API**: đã xác nhận Phase 4 — Xcode `LLDB.framework` chỉ có binary driver 188 MB + plugin, KHÔNG có SB API headers (`SBProcess.h` không tồn tại trong Xcode). → thay bằng **symbolication native** (`src/symbol`: `TASK_DYLD_INFO` + parse `LC_SYMTAB`) và step over/out bằng disasm + temp bp. Dùng LLDB SB API chỉ khi vendor llvm-project headers + build lldb (bỏ qua ở bản này).
+- **QtQml (scripting)**: brew `qtdeclarative` build cho macOS 26.0 → `a64dbg_script` (QJSEngine) chỉ là thư viện standalone + test, KHÔNG link vào app `.app` để giữ deployment target 14.0. App vẫn dùng Qt6::Widgets thuần.
 - **Lua** (scripting): Phase 6.
 
 ## Ràng buộc nền tảng

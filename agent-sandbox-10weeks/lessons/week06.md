@@ -36,7 +36,7 @@ Network policy cho phép chỉ định sandbox nào được nói chuyện với
 
 ## Liên kết code mẫu
 
-Xem [code/week06/README.md](../code/week06/README.md) — script `network_policy.py`.
+Xem [code/week06/README.md](../code/week06/README.md) — `policy.cpp` (C++ chi tiết) và `network_policy.py` (Python mô phỏng nhanh).
 
 ## Thảo luận
 

@@ -6,11 +6,18 @@ permalink: /agent-sandbox-10weeks/code/week08/README.html
 
 # Tuần 08 — Code mẫu
 
-## `tool_runner.py`
-Wrapper chạy tool an toàn (whitelist + denylist).
+## `tool_runner.cpp` (C++17, minh hoạ chi tiết)
+Wrapper chạy tool an toàn: whitelist + denylist + giới hạn.
+
+```bash
+g++ -std=c++17 -O2 tool_runner.cpp -o demo && ./demo
+```
+
+## `tool_runner.py` (Python, mô phỏng nhanh)
+Mô phỏng whitelist/denylist.
 
 ```bash
 python tool_runner.py --cmd 'ls -la'
 ```
 
-**An toàn:** script chỉ mô phỏng bằng dữ liệu, không chạy tool/lệnh thật, không đụng hệ thống.
+**An toàn:** cả hai đều thuần tính toán — không gọi syscall thật, không đụng filesystem/mạng, không chạy lệnh thật.

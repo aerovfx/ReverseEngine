@@ -39,7 +39,7 @@ permalink: /macos-reverse-engineering-10weeks/lessons/week04.html
 
 ## Liên kết code mẫu
 
-Xem [code/week04/README.md](../code/week04/README.md) — `strings_extract.py`, `codesign_inspect.sh`.
+Xem [code/week04/README.md](../code/week04/README.md) — `strings_extract.py`, `codesign_inspect.sh` · `strings_codesign.cpp` (C++17 chi tiết)
 
 ## Thảo luận
 

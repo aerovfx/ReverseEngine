@@ -38,7 +38,7 @@ Quy trình tìm serial:
 
 ## Liên kết code mẫu
 
-Xem [code/week10/README.md](../code/week10/README.md) — script `serial_check.py`.
+Xem [code/week10/README.md](../code/week10/README.md) — script `serial_check.py` · `serial_check.cpp` (C++17 chi tiết)
 
 ## Thảo luận
 

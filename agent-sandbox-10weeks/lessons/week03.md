@@ -38,7 +38,7 @@ Luồng: `Client → CubeAPI → CubeMaster → Cubelet → CubeShim → CubeHyp
 
 ## Liên kết code mẫu
 
-Xem [code/week03/README.md](../code/week03/README.md) — script `architecture_sim.py`.
+Xem [code/week03/README.md](../code/week03/README.md) — `pipeline.cpp` (C++ chi tiết) và `architecture_sim.py` (Python mô phỏng nhanh).
 
 ## Thảo luận
 

@@ -29,6 +29,7 @@ add_subdirectory(src/symbol)
 add_subdirectory(src/core)
 add_subdirectory(src/ui)
 add_subdirectory(src/plugin)
+add_subdirectory(src/script)
 add_subdirectory(src/app)
 
 # Plugin mẫu (Phase 6).

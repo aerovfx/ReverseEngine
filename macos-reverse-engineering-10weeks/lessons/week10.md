@@ -39,7 +39,7 @@ Quy trình tổng hợp:
 
 ## Liên kết code mẫu
 
-Xem [code/week10/README.md](../code/week10/README.md) — `report_builder.py`, `rechecklist.sh`.
+Xem [code/week10/README.md](../code/week10/README.md) — `report_builder.py`, `rechecklist.sh` · `report_builder.cpp` (C++17 chi tiết)
 
 ## Thảo luận
 
