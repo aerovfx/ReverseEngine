@@ -1,11 +1,15 @@
 #include "MainWindow.h"
 
+#include "DebuggerController.h"
+#include "DisasmView.h"
 #include "Disassembler.h"
+#include "DumpView.h"
 
 #include <QAction>
 #include <QApplication>
 #include <QDockWidget>
 #include <QHeaderView>
+#include <QInputDialog>
 #include <QMenu>
 #include <QMenuBar>
 #include <QMessageBox>
@@ -19,6 +23,10 @@ MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent) {
   setWindowTitle(QStringLiteral("a64dbg — macOS ARM64 debugger"));
   resize(1400, 900);
 
+  m_controller = new DebuggerController(this);
+  connect(m_controller, &DebuggerController::stopped, this, &MainWindow::onStopped);
+  connect(m_controller, &DebuggerController::running, this, &MainWindow::onRunning);
+
   buildDocks();
   buildMenus();
 
@@ -28,17 +36,14 @@ MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent) {
 
 void MainWindow::buildMenus() {
   QMenu* file = menuBar()->addMenu(QStringLiteral("&File"));
-  file->addAction(QStringLiteral("&Open…"), this, [] {});
-  file->addAction(QStringLiteral("&Attach…"), this, [] {});
-  file->addAction(QStringLiteral("&Detach"), this, [] {});
+  file->addAction(QStringLiteral("&Attach…"), this, &MainWindow::onAttach);
+  file->addAction(QStringLiteral("&Detach"), this, &MainWindow::onDetach);
   file->addSeparator();
   file->addAction(QStringLiteral("&Quit"), this, [] { QApplication::quit(); });
 
   QMenu* debug = menuBar()->addMenu(QStringLiteral("&Debug"));
-  debug->addAction(QStringLiteral("&Run / Continue"), this, [] {});
-  debug->addAction(QStringLiteral("Step &Into"), this, [] {});
-  debug->addAction(QStringLiteral("Step &Over"), this, [] {});
-  debug->addAction(QStringLiteral("Step O&ut"), this, [] {});
+  debug->addAction(QStringLiteral("&Run / Continue"), this, &MainWindow::onContinue);
+  debug->addAction(QStringLiteral("Step &Into"), this, &MainWindow::onStepInto);
 
   QMenu* view = menuBar()->addMenu(QStringLiteral("&View"));
   const auto docks = findChildren<QDockWidget*>();
@@ -53,33 +58,25 @@ void MainWindow::buildMenus() {
 void MainWindow::buildDocks() {
   setDockOptions(QMainWindow::AnimatedDocks | QMainWindow::AllowNestedDocks);
 
-  // CPU / disassembly — view chính.
-  m_disasmView = new QPlainTextEdit(this);
-  m_disasmView->setReadOnly(true);
-  m_disasmView->setPlaceholderText(
-      QStringLiteral("CPU / disassembly — Phase 2 (Capstone AArch64)"));
+  // CPU / disassembly.
+  m_disasmView = new DisasmView(this);
+  m_disasmView->setPlaceholderText(QStringLiteral("Attach để xem disassembly (Phase 2)"));
   auto* cpu = new QDockWidget(QStringLiteral("CPU"), this);
   cpu->setWidget(m_disasmView);
   addDockWidget(Qt::TopDockWidgetArea, cpu);
 
-  // Registers — bảng placeholder cho AArch64 x0..x30, sp, pc, cpsr.
+  // Registers — bảng AArch64 x0..x30, sp, pc, cpsr.
   m_registerView = new QTableWidget(0, 2, this);
   m_registerView->setHorizontalHeaderLabels(
       {QStringLiteral("Register"), QStringLiteral("Value")});
   m_registerView->horizontalHeader()->setStretchLastSection(true);
   m_registerView->verticalHeader()->setVisible(false);
-  const char* regs[] = {"x0",  "x1",  "x2",  "x3",  "x4",  "x5",  "x6",  "x7",
-                        "x8",  "x9",  "x10", "x11", "x12", "x13", "x14", "x15",
-                        "x16", "x17", "x18", "x19", "x20", "x21", "x22", "x23",
-                        "x24", "x25", "x26", "x27", "x28", "x29", "x30", "sp",
-                        "pc",  "cpsr"};
-  const int n = static_cast<int>(sizeof(regs) / sizeof(regs[0]));
-  m_registerView->setRowCount(n);
-  for (int i = 0; i < n; ++i) {
+  m_registerView->setRowCount(core::kRegisterCount);
+  for (int i = 0; i < core::kRegisterCount; ++i) {
     m_registerView->setItem(i, 0,
-                            new QTableWidgetItem(QString::fromLatin1(regs[i])));
-    m_registerView->setItem(
-        i, 1, new QTableWidgetItem(QStringLiteral("0x0000000000000000")));
+                            new QTableWidgetItem(QString::fromLatin1(core::kRegisterNames[i])));
+    m_registerView->setItem(i, 1,
+                            new QTableWidgetItem(QStringLiteral("0x0000000000000000")));
   }
   auto* reg = new QDockWidget(QStringLiteral("Registers"), this);
   reg->setWidget(m_registerView);
@@ -94,16 +91,81 @@ void MainWindow::buildDocks() {
   addDockWidget(Qt::BottomDockWidgetArea, m_stackDock);
 
   // Dump — dưới-phải (tab hóa với Stack).
-  m_dumpView = new QPlainTextEdit(this);
-  m_dumpView->setReadOnly(true);
-  m_dumpView->setPlaceholderText(
-      QStringLiteral("Memory dump (hex + ASCII) — Phase 2"));
+  m_dumpView = new DumpView(this);
+  m_dumpView->setPlaceholderText(QStringLiteral("Memory dump (hex + ASCII) — Phase 2"));
   m_dumpDock = new QDockWidget(QStringLiteral("Dump"), this);
   m_dumpDock->setWidget(m_dumpView);
   addDockWidget(Qt::BottomDockWidgetArea, m_dumpDock);
 
   tabifyDockWidget(m_stackDock, m_dumpDock);
   m_stackDock->raise();
+}
+
+void MainWindow::onAttach() {
+  bool ok = false;
+  const int pid = QInputDialog::getInt(this, QStringLiteral("Attach"),
+                                       QStringLiteral("PID:"), 0, 0, 2147483647, 1, &ok);
+  if (!ok) {
+    return;
+  }
+  if (m_controller->attach(pid)) {
+    statusBar()->showMessage(QStringLiteral("attached pid %1").arg(pid));
+  } else {
+    statusBar()->showMessage(
+        QStringLiteral("attach pid %1 thất bại (cần entitlement/quyền)").arg(pid));
+  }
+}
+
+void MainWindow::onDetach() {
+  m_controller->detach();
+  statusBar()->showMessage(QStringLiteral("detached"));
+}
+
+void MainWindow::onContinue() {
+  m_controller->runContinue();
+}
+
+void MainWindow::onStepInto() {
+  m_controller->stepInto();
+}
+
+void MainWindow::onRunning() {
+  statusBar()->showMessage(QStringLiteral("running…"));
+}
+
+void MainWindow::onStopped() {
+  core::RegisterState rs;
+  std::uint64_t pc = 0;
+  std::uint64_t sp = 0;
+  if (m_controller->readRegisters(rs)) {
+    updateRegisters(rs);
+    pc = rs.r[static_cast<int>(core::Reg::PC)];
+    sp = rs.r[static_cast<int>(core::Reg::SP)];
+  }
+
+  std::vector<Instruction> insns;
+  if (m_controller->disassembleAt(pc, 40, insns)) {
+    m_disasmView->show(insns, pc);
+  }
+
+  std::vector<std::uint8_t> mem;
+  if (m_controller->readMemory(sp, 256, mem)) {
+    m_dumpView->show(sp, mem);
+  }
+
+  statusBar()->showMessage(
+      QString::asprintf("stopped at 0x%llx", static_cast<unsigned long long>(pc)));
+}
+
+void MainWindow::updateRegisters(const core::RegisterState& rs) {
+  for (int i = 0; i < m_registerView->rowCount(); ++i) {
+    QTableWidgetItem* item = m_registerView->item(i, 1);
+    if (item == nullptr) {
+      item = new QTableWidgetItem();
+      m_registerView->setItem(i, 1, item);
+    }
+    item->setText(QString::asprintf("0x%016llx", static_cast<unsigned long long>(rs.r[i])));
+  }
 }
 
 void MainWindow::showAbout() {

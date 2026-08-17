@@ -18,4 +18,6 @@ exclude:
   - .github
   - plans
   - main
+  - a64dbg
+  - add_comments.py
 

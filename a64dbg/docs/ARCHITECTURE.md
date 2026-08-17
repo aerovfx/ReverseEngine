@@ -33,11 +33,12 @@
 |---|---|---|---|
 | `src/common` | `a64dbg_common` | Log, Version | Phase 0 ✓ |
 | `src/model` | `a64dbg_model` | Session, BreakpointManager (sau) | Phase 0 stub |
-| `src/disasm` | `a64dbg_disasm` | Capstone wrapper + instruction cache | Phase 0 stub (version), Phase 2 full |
-| `src/core` | `a64dbg_core` | IDebugBackend + MachBackend | Phase 0 interface, Phase 1 impl |
+| `src/disasm` | `a64dbg_disasm` | Capstone wrapper (ARM64) + instruction cache | Phase 2 ✓ (disasm ARM64) |
+| `src/macho` | `a64dbg_macho` | Mach-O parser (segment/symbol/entry) | Phase 2 ✓ |
+| `src/core` | `a64dbg_core` | IDebugBackend + MachBackend | Phase 1 ✓ (attach/mem/reg/BRK bp/exception/single-step) |
 | `src/lldb` | `a64dbg_lldb` | LLDBBackend + ISymbolProvider | Phase 4 |
-| `src/app` | `a64dbg` | main + MainWindow + theme | Phase 0 ✓ |
-| `src/ui` | (tách khi view nhiều) | DisasmView/DumpView/... | Phase 2 |
+| `src/app` | `a64dbg` | main + MainWindow + theme | Phase 2 ✓ (wire controller) |
+| `src/ui` | `a64dbg_ui` | DebuggerController + DisasmView/DumpView | Phase 2 ✓ |
 | `src/plugin` | `a64dbg_plugin` | PluginHost + scripting | Phase 6 |
 
 ## Cấu trúc cây
@@ -66,3 +67,13 @@ a64dbg/
 - App phải code-sign với entitlement `com.apple.security.cs.debugger` (hoặc chạy root) để `task_for_pid` lên tiến trình khác.
 - SIP chặn attach tiến trình Apple ký hệ thống.
 - Demo an toàn: launch child bằng `posix_spawn(POSIX_SPAWN_START_SUSPENDED)` — không cần entitlement để gỡ lỗi tiến trình do mình tạo.
+
+## Gotcha nền tảng ARM64 (đã đo trên máy thật — Phase 1)
+
+- `task_for_pid`: ký ad-hoc + entitlement debugger **được** taskgated chấp nhận cho con của mình (kr=0); launchd/SIP vẫn kr=5.
+- **BRK mềm**: exception `EXC_BREAKPOINT` có `code[0]=EXC_ARM_BREAKPOINT(1)`, `code[1]=địa chỉ lệnh BRK`, và `PC` trỏ **TẠI** lệnh BRK (khác x86 trỏ +1 sau `int3`). → resume chỉ cần khôi phục lệnh gốc, PC đã đúng, không cần lùi.
+- **Single-step (MDSCR_EL1.SS)**: cũng gửi `EXC_BREAKPOINT code[0]=1` nhưng `code[1]=0`; `PC` = lệnh kế tiếp. Phân biệt bằng `code[1]`.
+- **W^X**: cấm một trang vừa write vừa execute. Patch code = `mach_vm_protect(READ|WRITE|COPY)` → `mach_vm_write` → khôi phục `READ|EXECUTE` (target phải đang suspend vì khoảng mất-execute).
+- Tên field (arm64, không phải arm64e): `arm_thread_state64_t` dùng `__x/__fp/__lr/__sp/__pc/__cpsr`; `arm_debug_state64_t` dùng `__bvr/__bcr/__wvr/__wcr/__mdscr_el1` (có `__` vì biến thể `__DARWIN_UNIX03`).
+- Không có `EXC_MASK_SINGLE_STEP` trên macOS — single-step nằm trong `EXC_MASK_BREAKPOINT`.
+- `mach_exc_server` không có trong libSystem → vendor MIG-generated (`src/core/mig/`) từ `mach_exc.defs`.

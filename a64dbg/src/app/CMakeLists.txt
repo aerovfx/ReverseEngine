@@ -11,6 +11,7 @@ qt_add_executable(a64dbg MANUAL_FINALIZATION
 
 target_link_libraries(a64dbg PRIVATE
   Qt6::Widgets
+  a64dbg_ui
   a64dbg_common
   a64dbg_model
   a64dbg_disasm
