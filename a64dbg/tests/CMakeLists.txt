@@ -50,3 +50,31 @@ add_custom_command(TARGET test_controller POST_BUILD
   VERBATIM)
 add_test(NAME controller COMMAND test_controller)
 set_tests_properties(controller PROPERTIES TIMEOUT 20)
+
+add_executable(test_phase3 test_phase3.cpp)
+target_link_libraries(test_phase3 PRIVATE a64dbg_core)
+target_compile_definitions(test_phase3 PRIVATE
+  TARGET_PATH="$<TARGET_FILE:a64dbg_target>")
+a64dbg_enable_warnings(test_phase3)
+add_custom_command(TARGET test_phase3 POST_BUILD
+  COMMAND codesign --force --sign - --entitlements
+          "${CMAKE_SOURCE_DIR}/entitlements/debugger.entitlements"
+          "$<TARGET_FILE:test_phase3>"
+  COMMENT "sign test_phase3 với debugger entitlement"
+  VERBATIM)
+add_test(NAME phase3 COMMAND test_phase3)
+set_tests_properties(phase3 PROPERTIES TIMEOUT 20)
+
+add_executable(test_symbol test_symbol.cpp)
+target_link_libraries(test_symbol PRIVATE a64dbg_core a64dbg_symbol)
+target_compile_definitions(test_symbol PRIVATE
+  TARGET_PATH="$<TARGET_FILE:a64dbg_target>")
+a64dbg_enable_warnings(test_symbol)
+add_custom_command(TARGET test_symbol POST_BUILD
+  COMMAND codesign --force --sign - --entitlements
+          "${CMAKE_SOURCE_DIR}/entitlements/debugger.entitlements"
+          "$<TARGET_FILE:test_symbol>"
+  COMMENT "sign test_symbol với debugger entitlement"
+  VERBATIM)
+add_test(NAME symbol COMMAND test_symbol)
+set_tests_properties(symbol PROPERTIES TIMEOUT 20)

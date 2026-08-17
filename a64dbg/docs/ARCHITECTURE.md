@@ -35,7 +35,7 @@
 | `src/model` | `a64dbg_model` | Session, BreakpointManager (sau) | Phase 0 stub |
 | `src/disasm` | `a64dbg_disasm` | Capstone wrapper (ARM64) + instruction cache | Phase 2 ✓ (disasm ARM64) |
 | `src/macho` | `a64dbg_macho` | Mach-O parser (segment/symbol/entry) | Phase 2 ✓ |
-| `src/core` | `a64dbg_core` | IDebugBackend + MachBackend | Phase 1 ✓ (attach/mem/reg/BRK bp/exception/single-step) |
+| `src/core` | `a64dbg_core` | IDebugBackend + MachBackend | Phase 3 ✓ (attach/mem/reg/BRK bp/hw bp/watchpoint/SS/dance) |
 | `src/lldb` | `a64dbg_lldb` | LLDBBackend + ISymbolProvider | Phase 4 |
 | `src/app` | `a64dbg` | main + MainWindow + theme | Phase 2 ✓ (wire controller) |
 | `src/ui` | `a64dbg_ui` | DebuggerController + DisasmView/DumpView | Phase 2 ✓ |
@@ -77,3 +77,6 @@ a64dbg/
 - Tên field (arm64, không phải arm64e): `arm_thread_state64_t` dùng `__x/__fp/__lr/__sp/__pc/__cpsr`; `arm_debug_state64_t` dùng `__bvr/__bcr/__wvr/__wcr/__mdscr_el1` (có `__` vì biến thể `__DARWIN_UNIX03`).
 - Không có `EXC_MASK_SINGLE_STEP` trên macOS — single-step nằm trong `EXC_MASK_BREAKPOINT`.
 - `mach_exc_server` không có trong libSystem → vendor MIG-generated (`src/core/mig/`) từ `mach_exc.defs`.
+- **Hardware breakpoint (bvr)**: gửi `EXC_BREAKPOINT code[0]=1` (giống BRK), `code[1]=địa chỉ` — phân biệt bằng tra bảng `m_hwBps`.
+- **Watchpoint (wvr)**: gửi `EXC_BREAKPOINT code[0]=EXC_ARM_DA_DEBUG(0x102)`, `code[1]=địa chỉ được watch` (KHÔNG phải EXC_BAD_ACCESS).
+- **Breakpoint dance** (continue giữ bp): khôi phục lệnh gốc → single-step 1 lệnh → re-patch BRK → continue; single-step trung gian phải "transparent" (không dừng cho user).

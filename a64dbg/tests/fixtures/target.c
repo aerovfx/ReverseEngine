@@ -11,7 +11,7 @@ __attribute__((noinline)) void bp_here(void) {
 }
 
 int main(void) {
-  printf("READY %p\n", (void*)&bp_here);
+  printf("READY %p %p\n", (void*)&bp_here, (void*)&g_counter);
   fflush(stdout);
 
   for (int i = 0; i < 200000; ++i) {

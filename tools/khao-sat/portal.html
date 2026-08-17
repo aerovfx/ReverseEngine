@@ -576,7 +576,7 @@ function napTuSheets(){
 /* ── CLASSES ── */
 /* level groups */
 const LEVELS = [
-  { label:'⌬ Security cohorts', ids:['RE-01','RE-02'], color:'#31f7ff' }
+  { label:'⌬ Security cohorts', ids:['RE-01','RE-02'], color:'#b455ff' }
 ];
 
 function getLevelColor(classId){
@@ -669,7 +669,7 @@ function renderCourses(){
   const list = DB.courses || [];
   if(!list.length){ grid.innerHTML = '<p style="color:var(--muted);font-size:.85rem">Đang tải danh sách khoá học…</p>'; return; }
   if(!selectedCourse) selectedCourse = list[0];
-  const mau = { cyber:'#31f7ff' };
+  const mau = { cyber:'#b455ff' };
   grid.innerHTML = list.map(c=>{
     const m = mau[c.group] || '#245c46';
     const on = selectedCourse && selectedCourse.id===c.id;

@@ -15,6 +15,7 @@
 #include <string>
 #include <thread>
 #include <unordered_map>
+#include <unordered_set>
 #include <vector>
 
 namespace a64dbg::core {
@@ -41,6 +42,10 @@ public:
   bool stepOut() override { return false; }   // Phase 3/4
   bool setSoftwareBreakpoint(std::uint64_t addr) override;
   bool removeSoftwareBreakpoint(std::uint64_t addr) override;
+  bool setHardwareBreakpoint(std::uint64_t addr) override;
+  bool removeHardwareBreakpoint(std::uint64_t addr) override;
+  bool setWatchpoint(std::uint64_t addr, std::size_t size) override;
+  bool removeWatchpoint(std::uint64_t addr) override;
   bool readMemory(std::uint64_t addr, void* buf, std::size_t len) override;
   bool writeMemory(std::uint64_t addr, const void* buf, std::size_t len) override;
   bool readRegisters(std::uint64_t* regs, std::size_t count) override;
@@ -49,6 +54,7 @@ public:
   // Tiện ích Phase 1 (ngoài contract).
   bool launch(const std::vector<std::string>& args);
   bool isAttached() const { return m_task != MACH_PORT_NULL; }
+  task_t taskPort() const { return m_task; }  // cho SymbolProvider (TASK_DYLD_INFO)
   bool readRegisterState(RegisterState& out);
   bool writeRegisterState(const RegisterState& in);
   bool waitForStop(int timeoutMs);
@@ -87,6 +93,9 @@ private:
   EventHandler m_handler;
 
   std::unordered_map<std::uint64_t, std::uint32_t> m_swBps;  // addr -> lệnh gốc
+  std::unordered_set<std::uint64_t> m_hwBps;                 // hardware breakpoint addrs
+  std::mutex m_hwBpsMtx;  // bảo vệ m_hwBps (đọc từ exception thread trong buildEvent)
+  std::atomic<std::uint64_t> m_pendingBpAddr{0};  // bp đang được "dance" (continue giữ bp)
 };
 
 }  // namespace a64dbg::core

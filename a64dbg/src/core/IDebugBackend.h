@@ -6,7 +6,16 @@
 
 namespace a64dbg::core {
 
-enum class StopReason { None, Entry, Breakpoint, SingleStep, Exception, Exited };
+enum class StopReason {
+  None,
+  Entry,
+  Breakpoint,
+  SingleStep,
+  HardwareBreakpoint,
+  Watchpoint,
+  Exception,
+  Exited,
+};
 
 // Sự kiện chuẩn hóa từ backend đẩy lên GUI (qua hàng đợi thread-safe).
 struct DebugEvent {
@@ -34,6 +43,10 @@ public:
 
   virtual bool setSoftwareBreakpoint(std::uint64_t addr) = 0;
   virtual bool removeSoftwareBreakpoint(std::uint64_t addr) = 0;
+  virtual bool setHardwareBreakpoint(std::uint64_t addr) = 0;
+  virtual bool removeHardwareBreakpoint(std::uint64_t addr) = 0;
+  virtual bool setWatchpoint(std::uint64_t addr, std::size_t size) = 0;
+  virtual bool removeWatchpoint(std::uint64_t addr) = 0;
 
   virtual bool readMemory(std::uint64_t addr, void* buf, std::size_t len) = 0;
   virtual bool writeMemory(std::uint64_t addr, const void* buf, std::size_t len) = 0;

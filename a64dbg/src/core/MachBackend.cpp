@@ -3,6 +3,7 @@
 #include "Log.h"
 #include "mig/mach_exc.h"
 
+#include <mach/arm/exception.h>
 #include <mach/arm/thread_status.h>
 #include <mach/exception_types.h>
 #include <mach/mach_vm.h>
@@ -175,7 +176,16 @@ bool MachBackend::resume() {
     if (m_stopped.load()) {
       // Đang dừng ở software breakpoint: lùi PC về địa chỉ bp để lệnh gốc được chạy.
       if (m_lastEvent.reason == StopReason::Breakpoint && m_lastBreakpointAddr != 0) {
-        m_threadState.__pc = m_lastBreakpointAddr;
+        const std::uint64_t bpAddr = m_lastBreakpointAddr;
+        m_threadState.__pc = bpAddr;
+        if (m_swBps.count(bpAddr)) {
+          // Breakpoint dance: user giữ bp → khôi phục lệnh gốc, single-step 1 lệnh,
+          // rồi re-patch BRK ở handleException (transparent với user).
+          const std::uint32_t orig = m_swBps[bpAddr];
+          writeCode(bpAddr, &orig, sizeof(orig));
+          enableSingleStep(true);
+          m_pendingBpAddr.store(bpAddr);
+        }
       }
       m_resumeRequested = true;
       m_cv.notify_all();
@@ -237,6 +247,124 @@ bool MachBackend::removeSoftwareBreakpoint(std::uint64_t addr) {
   }
   m_swBps.erase(it);
   return true;
+}
+
+bool MachBackend::setHardwareBreakpoint(std::uint64_t addr) {
+  if (m_hwBps.count(addr)) {
+    return true;
+  }
+  if (m_task == MACH_PORT_NULL || m_primaryThread == MACH_PORT_NULL) {
+    return false;
+  }
+  arm_debug_state64_t ds{};
+  mach_msg_type_number_t count = ARM_DEBUG_STATE64_COUNT;
+  if (thread_get_state(m_primaryThread, ARM_DEBUG_STATE64,
+                       reinterpret_cast<thread_state_t>(&ds), &count) != KERN_SUCCESS) {
+    return false;
+  }
+  int slot = -1;
+  for (int i = 0; i < 16; ++i) {
+    if ((ds.__bcr[i] & 1u) == 0) {  // slot chưa bật
+      slot = i;
+      break;
+    }
+  }
+  if (slot < 0) {
+    return false;  // hết 16 slot
+  }
+  ds.__bvr[slot] = addr;
+  // BCR: E=1, BT=0b00 (unlinked instruction address match), BAS=0xF (4 byte).
+  ds.__bcr[slot] = 0x1E1u;
+  if (thread_set_state(m_primaryThread, ARM_DEBUG_STATE64,
+                       reinterpret_cast<thread_state_t>(&ds), count) != KERN_SUCCESS) {
+    return false;
+  }
+  {
+    std::lock_guard<std::mutex> lk(m_hwBpsMtx);
+    m_hwBps.insert(addr);
+  }
+  return true;
+}
+
+bool MachBackend::removeHardwareBreakpoint(std::uint64_t addr) {
+  if (!m_hwBps.count(addr)) {
+    return false;
+  }
+  if (m_primaryThread == MACH_PORT_NULL) {
+    return false;
+  }
+  arm_debug_state64_t ds{};
+  mach_msg_type_number_t count = ARM_DEBUG_STATE64_COUNT;
+  if (thread_get_state(m_primaryThread, ARM_DEBUG_STATE64,
+                       reinterpret_cast<thread_state_t>(&ds), &count) != KERN_SUCCESS) {
+    return false;
+  }
+  for (int i = 0; i < 16; ++i) {
+    if (ds.__bvr[i] == addr) {
+      ds.__bcr[i] = 0;  // tắt slot
+    }
+  }
+  if (thread_set_state(m_primaryThread, ARM_DEBUG_STATE64,
+                       reinterpret_cast<thread_state_t>(&ds), count) != KERN_SUCCESS) {
+    return false;
+  }
+  {
+    std::lock_guard<std::mutex> lk(m_hwBpsMtx);
+    m_hwBps.erase(addr);
+  }
+  return true;
+}
+
+bool MachBackend::setWatchpoint(std::uint64_t addr, std::size_t size) {
+  if (m_task == MACH_PORT_NULL || m_primaryThread == MACH_PORT_NULL) {
+    return false;
+  }
+  arm_debug_state64_t ds{};
+  mach_msg_type_number_t count = ARM_DEBUG_STATE64_COUNT;
+  if (thread_get_state(m_primaryThread, ARM_DEBUG_STATE64,
+                       reinterpret_cast<thread_state_t>(&ds), &count) != KERN_SUCCESS) {
+    return false;
+  }
+  int slot = -1;
+  for (int i = 0; i < 16; ++i) {
+    if ((ds.__wcr[i] & 1u) == 0) {
+      slot = i;
+      break;
+    }
+  }
+  if (slot < 0) {
+    return false;
+  }
+  ds.__wvr[slot] = addr;
+  // WCR: E=1, PAC=0b10 (EL0), LSC=0b11 (load+store), BAS=(1<<size)-1.
+  const std::uint64_t bas = (size >= 8) ? 0xFF : ((1u << size) - 1);
+  ds.__wcr[slot] = (bas << 5) | (0b11 << 3) | (0b10 << 1) | 1;
+  return thread_set_state(m_primaryThread, ARM_DEBUG_STATE64,
+                          reinterpret_cast<thread_state_t>(&ds), count) == KERN_SUCCESS;
+}
+
+bool MachBackend::removeWatchpoint(std::uint64_t addr) {
+  if (m_primaryThread == MACH_PORT_NULL) {
+    return false;
+  }
+  arm_debug_state64_t ds{};
+  mach_msg_type_number_t count = ARM_DEBUG_STATE64_COUNT;
+  if (thread_get_state(m_primaryThread, ARM_DEBUG_STATE64,
+                       reinterpret_cast<thread_state_t>(&ds), &count) != KERN_SUCCESS) {
+    return false;
+  }
+  bool found = false;
+  for (int i = 0; i < 16; ++i) {
+    if (ds.__wvr[i] == addr) {
+      ds.__wcr[i] = 0;
+      found = true;
+    }
+  }
+  if (!found) {
+    return false;
+  }
+  return thread_set_state(m_primaryThread, ARM_DEBUG_STATE64,
+                          reinterpret_cast<thread_state_t>(&ds), count) == KERN_SUCCESS;
 }
 
 bool MachBackend::readMemory(std::uint64_t addr, void* buf, std::size_t len) {
@@ -390,20 +518,34 @@ void MachBackend::buildEvent(exception_type_t exception, mach_exception_data_t c
   switch (exception) {
     case EXC_BREAKPOINT:
       if (codeCnt >= 1 && code[0] == EXC_ARM_BREAKPOINT) {
-        // BRK mềm có code[1] = địa chỉ lệnh (khác 0); single-step có code[1] = 0.
-        if (codeCnt >= 2 && code[1] != 0) {
-          m_lastEvent.reason = StopReason::Breakpoint;
-          m_lastEvent.message = "software breakpoint (BRK)";
-          // ARM64 báo PC TẠI lệnh BRK (không phải +4 như x86), nên địa chỉ bp = pc.
-          m_lastBreakpointAddr = m_threadState.__pc;
-        } else {
+        // code[1] = 0 → single-step; code[1] != 0 → BRK mềm HOẶC hw breakpoint
+        // (trên macOS ARM64 cả hai đều gửi EXC_ARM_BREAKPOINT). Phân biệt bằng bảng hw bp.
+        if (codeCnt >= 2 && code[1] == 0) {
           m_lastEvent.reason = StopReason::SingleStep;
           m_lastEvent.message = "single step";
+        } else {
+          bool isHw = false;
+          {
+            std::lock_guard<std::mutex> lk(m_hwBpsMtx);
+            isHw = m_hwBps.count(m_threadState.__pc) != 0;
+          }
+          if (isHw) {
+            m_lastEvent.reason = StopReason::HardwareBreakpoint;
+            m_lastEvent.message = "hardware breakpoint";
+          } else {
+            m_lastEvent.reason = StopReason::Breakpoint;
+            m_lastEvent.message = "software breakpoint (BRK)";
+            // ARM64 báo PC TẠI lệnh BRK, nên địa chỉ bp = pc.
+            m_lastBreakpointAddr = m_threadState.__pc;
+          }
         }
+      } else if (codeCnt >= 1 && code[0] == EXC_ARM_DA_DEBUG) {
+        // Watchpoint: EXC_BREAKPOINT + code[0]=EXC_ARM_DA_DEBUG(0x102), code[1]=địa chỉ watch.
+        m_lastEvent.reason = StopReason::Watchpoint;
+        m_lastEvent.message = "watchpoint";
       } else {
-        // EXC_ARM_DA_DEBUG: hardware bp/watchpoint.
         m_lastEvent.reason = StopReason::SingleStep;
-        m_lastEvent.message = "debug exception (hw bp/watchpoint)";
+        m_lastEvent.message = "debug exception";
       }
       break;
     case EXC_BAD_ACCESS:
@@ -436,6 +578,21 @@ kern_return_t MachBackend::handleException(exception_type_t exception, mach_exce
     std::memcpy(&m_threadState, old_state, sizeof(arm_thread_state64_t));
   }
   buildEvent(exception, code, codeCnt);
+
+  // Breakpoint dance: single-step sau khi phục hồi lệnh gốc → re-patch + tự continue
+  // (không dừng cho user, không gọi handler).
+  if (m_lastEvent.reason == StopReason::SingleStep && m_pendingBpAddr.load() != 0) {
+    const std::uint64_t bpAddr = m_pendingBpAddr.load();
+    task_suspend(m_task);
+    const std::uint32_t brk = kBrkInstruction;
+    writeCode(bpAddr, &brk, sizeof(brk));
+    m_pendingBpAddr.store(0);
+    enableSingleStep(false);
+    task_resume(m_task);
+    std::memcpy(new_state, &m_threadState, sizeof(arm_thread_state64_t));
+    *new_stateCnt = ARM_THREAD_STATE64_COUNT;
+    return KERN_SUCCESS;
+  }
 
   // Sau single-step phải tắt SS, nếu không mọi continue/step sau đều bị step tiếp.
   if (m_lastEvent.reason == StopReason::SingleStep) {

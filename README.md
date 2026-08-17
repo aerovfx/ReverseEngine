@@ -7,16 +7,16 @@
 **Nền tảng học tập mở · Tiếng Việt · Chạy trên GitHub Pages**
 
 <p>
-  <a href="https://aerovfx.github.io/ReverseEngine/"><img src="https://img.shields.io/badge/🚀_Truy_cập_trang_học-aerovfx.github.io%2FReverseEngine-31f7ff?style=for-the-badge&logo=github" alt="Truy cập trang học"></a>
-  <a href="#-lộ-trình"><img src="https://img.shields.io/badge/Lộ_trình-4_khóa·40_tuần-c6ff00?style=for-the-badge" alt="Lộ trình"></a>
-  <a href="#-nguyên-tắc-an-toàn"><img src="https://img.shields.io/badge/Lab-An_toàn·Cô_lập-31f7ff?style=for-the-badge" alt="An toàn"></a>
+  <a href="https://aerovfx.github.io/ReverseEngine/"><img src="https://img.shields.io/badge/🚀_Truy_cập_trang_học-aerovfx.github.io%2FReverseEngine-b455ff?style=for-the-badge&logo=github" alt="Truy cập trang học"></a>
+  <a href="#-lộ-trình"><img src="https://img.shields.io/badge/Lộ_trình-4_khóa·40_tuần-ffb000?style=for-the-badge" alt="Lộ trình"></a>
+  <a href="#-nguyên-tắc-an-toàn"><img src="https://img.shields.io/badge/Lab-An_toàn·Cô_lập-b455ff?style=for-the-badge" alt="An toàn"></a>
 </p>
 
 <p>
-  <img src="https://img.shields.io/badge/Binary-PE·MachO·ARM64-0b1320" alt="binary">
-  <img src="https://img.shields.io/badge/Công_cụ-x64dbg·LLDB·Frida·Ghidra-0b1320" alt="tools">
-  <img src="https://img.shields.io/badge/Ngôn_ngữ-Tiếng_Việt-0b1320" alt="lang">
-  <img src="https://img.shields.io/badge/License-Giáo_dục_·_Hợp_pháp-0b1320" alt="license">
+  <img src="https://img.shields.io/badge/Binary-PE·MachO·ARM64-0a0616" alt="binary">
+  <img src="https://img.shields.io/badge/Công_cụ-x64dbg·LLDB·Frida·Ghidra-0a0616" alt="tools">
+  <img src="https://img.shields.io/badge/Ngôn_ngữ-Tiếng_Việt-0a0616" alt="lang">
+  <img src="https://img.shields.io/badge/License-Giáo_dục_·_Hợp_pháp-0a0616" alt="license">
 </p>
 
 ---
