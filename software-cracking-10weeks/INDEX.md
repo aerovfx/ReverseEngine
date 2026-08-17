@@ -8,7 +8,7 @@ permalink: /software-cracking-10weeks/INDEX.html
 
 Khoá học 10 tuần về **phân tích và vá phần mềm (software cracking) trong phạm vi hợp pháp**, xây dựng từ nội dung khóa học *"Software Ethical Hacking – Crack Software like A Pro"* (Udemy, 12 module) — được tái cấu trúc theo chuẩn ReverseEngine: bài học, code minh hoạ chạy được, bài tập 3 mức và dự án cuối khoá.
 
-> Nguồn tham khảo (Google Drive công khai): [Udemy – Software Ethical Hacking – Crack Software like A Pro](https://drive.google.com/drive/folders/1yrgDXoBcun9603AjPqCJHfGQr0KP-Qvv). Khoá học **không sao chép** video/phụ đề; toàn bộ bài viết là nội dung tiếng Việt được biên soạn lại.
+> Nguồn tham khảo: Udemy – Software Ethical Hacking – Crack Software like A Pro. Khoá học **không sao chép** video/phụ đề; toàn bộ bài viết là nội dung tiếng Việt được biên soạn lại.
 
 ## Kết quả đầu ra
 
